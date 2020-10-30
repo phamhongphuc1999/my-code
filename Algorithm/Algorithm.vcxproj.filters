@@ -5,15 +5,24 @@
     <ClCompile Include="HugeInteger.cpp">
       <Filter>HugeInteger</Filter>
     </ClCompile>
+    <ClCompile Include="Sort.cpp">
+      <Filter>Sort</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="HugeInteger">
       <UniqueIdentifier>{71a36780-f63f-4dd7-9846-334c8363d441}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sort">
+      <UniqueIdentifier>{a955cfe9-9406-4b9a-9899-1421446a78a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HugeInteger.h">
       <Filter>HugeInteger</Filter>
+    </ClInclude>
+    <ClInclude Include="Sort.h">
+      <Filter>Sort</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
