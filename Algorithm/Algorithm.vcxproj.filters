@@ -2,27 +2,15 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="HugeInteger.cpp">
-      <Filter>HugeInteger</Filter>
-    </ClCompile>
-    <ClCompile Include="Sort.cpp">
-      <Filter>Sort</Filter>
-    </ClCompile>
+    <ClCompile Include="FindMax\FindMax.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="HugeInteger">
-      <UniqueIdentifier>{71a36780-f63f-4dd7-9846-334c8363d441}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sort">
-      <UniqueIdentifier>{a955cfe9-9406-4b9a-9899-1421446a78a0}</UniqueIdentifier>
-    </Filter>
+    <Image Include="HugeInteger\HugeInteger1.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HugeInteger.h">
-      <Filter>HugeInteger</Filter>
-    </ClInclude>
-    <ClInclude Include="Sort.h">
-      <Filter>Sort</Filter>
-    </ClInclude>
+    <Text Include="FindMax\problem.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FindMax\FindMax.h" />
   </ItemGroup>
 </Project>

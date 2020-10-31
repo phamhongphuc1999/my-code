@@ -1,0 +1,1 @@
+﻿Thuật toán Dijkstra được đề xuất để giải bài toán: Tìm đường đi ngắn nhất từ một đỉnh nguồn s đến tất cả các đỉnh còn lại trên đồ thị với trọng số không âm trên cạnh (Giả thiết: đồ thị không chứa chu trình âm)

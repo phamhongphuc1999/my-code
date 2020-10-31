@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Sort.h";
+#include "FindMax/FindMax.h"
 using namespace std;
 
 bool AAA(int a, int b) {
@@ -7,8 +7,13 @@ bool AAA(int a, int b) {
 }
 
 int main() {
-	int* i = new int[] {1, 10, 2, 9, 3, 8};
-	QuickSort<int>(i, 0, 5, AAA, END);
-	for (int j = 0; j < 6; j++)
-		cout << i[j] << endl;
+	int N;
+	cin >> N;
+	int** matric = new int* [N];
+	for (int i = 0; i < N; i++) {
+		matric[i] = new int[N];
+		for (int j = 0; j < N; j++)
+			cin >> matric[i][j];
+	}
+	cout << FindMostOne(matric, N);
 }

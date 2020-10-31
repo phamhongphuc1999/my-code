@@ -139,13 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HugeInteger.cpp" />
-    <ClCompile Include="Sort.cpp" />
+    <ClCompile Include="FindMax\FindMax.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HugeInteger.h" />
-    <ClInclude Include="Sort.h" />
+    <Image Include="HugeInteger\HugeInteger1.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="FindMax\problem.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FindMax\FindMax.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
