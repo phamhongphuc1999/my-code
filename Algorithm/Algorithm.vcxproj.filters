@@ -3,14 +3,18 @@
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="FindMax\FindMax.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="HugeInteger\HugeInteger1.PNG" />
+    <ClCompile Include="Dijkstra\Dijkstra.cpp" />
+    <ClCompile Include="HugeInteger\HugeInteger.cpp" />
+    <ClCompile Include="Sort\Sort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="FindMax\problem.txt" />
+    <Text Include="Dijkstra\problem.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FindMax\FindMax.h" />
+    <ClInclude Include="Dijkstra\Dijkstra.h" />
+    <ClInclude Include="HugeInteger\HugeInteger.h" />
+    <ClInclude Include="Sort\Sort.h" />
   </ItemGroup>
 </Project>

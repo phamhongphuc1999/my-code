@@ -2,7 +2,7 @@
 #ifndef _SORT_
 #define _SORT_
 
-template <typename T> 
+template <typename T>
 void SWAP(T* element1, T* element2) {
 	T temp = *element1;
 	*element1 = *element2;
@@ -87,5 +87,20 @@ void MergeSort(T* array, int begin, int end, bool (*comparer)(T, T)) {
 		MergeSort(array, splip + 1, end, comparer);
 		Merge(array, begin, end, splip, comparer);
 	}
+}
+
+template <typename T>
+void heapify(T* array, int offset, int heap_size, bool (*comparer)(T, T)) {
+
+}
+
+template <typename T>
+void CreateHeap(T* array, int length, bool (*comparer)(T, T)) {
+
+}
+
+template <typename T>
+void HeapSort(T* aray, int length, bool (*comparer)(T, T)) {
+
 }
 #endif

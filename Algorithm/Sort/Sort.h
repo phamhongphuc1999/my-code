@@ -1,7 +1,6 @@
 #pragma once
 #ifndef SORT
 #define SORT
-
 enum TYPE_QUICK_SORT {
 	HEAD,
 	END
@@ -28,5 +27,12 @@ void Merge(T* array, int begin, int end, int splip, bool (*comparer)(T, T));
 template <typename T>
 void MergeSort(T* array, int begin, int end, bool (*comparer)(T, T));
 
-#include "Sort.cpp"
+template <typename T>
+void heapify(T* array, int offset, int heap_size, bool (*comparer)(T, T));
+
+template <typename T>
+void CreateHeap(T* array, int length, bool (*comparer)(T, T));
+
+template <typename T>
+void HeapSort(T* aray, int length, bool (*comparer)(T, T));
 #endif

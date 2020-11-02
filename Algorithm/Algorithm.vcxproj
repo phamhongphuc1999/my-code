@@ -139,17 +139,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dijkstra\Dijkstra.cpp" />
     <ClCompile Include="FindMax\FindMax.cpp" />
+    <ClCompile Include="HugeInteger\HugeInteger.cpp" />
+    <ClCompile Include="Sort\Sort.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="HugeInteger\HugeInteger1.PNG" />
-  </ItemGroup>
-  <ItemGroup>
+    <Text Include="Dijkstra\problem.txt" />
     <Text Include="FindMax\problem.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dijkstra\Dijkstra.h" />
     <ClInclude Include="FindMax\FindMax.h" />
+    <ClInclude Include="HugeInteger\HugeInteger.h" />
+    <ClInclude Include="Sort\Sort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
