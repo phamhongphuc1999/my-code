@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{fb6fea94-252d-4e62-a92e-d338659573a8}</ProjectGuid>
+    <ProjectGuid>{927f7a61-dd43-488c-8c8c-2e8a70c1d9e4}</ProjectGuid>
     <RootNamespace>Algorithm</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -139,20 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Dijkstra\Dijkstra.cpp" />
-    <ClCompile Include="FindMax\FindMax.cpp" />
-    <ClCompile Include="HugeInteger\HugeInteger.cpp" />
-    <ClCompile Include="Sort\Sort.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Dijkstra\problem.txt" />
-    <Text Include="FindMax\problem.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Dijkstra\Dijkstra.h" />
-    <ClInclude Include="FindMax\FindMax.h" />
-    <ClInclude Include="HugeInteger\HugeInteger.h" />
     <ClInclude Include="Sort\Sort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,4 +1,0 @@
-cho một ma trận N*N, các phần tử trong ma trận chỉ nhận giá trị 0 hoặc 1 sao cho các phần tử 1 luôn đứng trước các phần tử 0. 
-input: dòng 1: N
-       N dòng tiếp theo: các dòng trong ma trận
-output: in ra màn hình dòng trong ma trận có nhiều số 1 nhất

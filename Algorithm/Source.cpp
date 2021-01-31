@@ -1,19 +1,14 @@
 #include <iostream>
-#include "FindMax/FindMax.h"
+#include "Sort/Sort.h"
 using namespace std;
 
-bool AAA(int a, int b) {
+bool ABC(int a, int b) {
 	return a < b;
 }
 
 int main() {
-	int N;
-	cin >> N;
-	int** matric = new int* [N];
-	for (int i = 0; i < N; i++) {
-		matric[i] = new int[N];
-		for (int j = 0; j < N; j++)
-			cin >> matric[i][j];
-	}
-	cout << FindMostOne(matric, N);
+	int* a = new int[10]{ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+	InsertSort(a, 10, ABC);
+	for (int i = 0; i < 10; i++)
+		cout << a[i] << " ";
 }
