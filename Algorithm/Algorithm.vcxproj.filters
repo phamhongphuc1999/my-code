@@ -20,6 +20,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Inversion\inversion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Sort\Sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
