@@ -1,4 +1,5 @@
 #pragma once
+#include <time.h>
 #include "../utilities.h"
 
 enum QUICK_SORT_TYPE {
@@ -20,7 +21,8 @@ int Partition(T* array, int begin, int end, int pivot, bool (*comparer)(T, T)) {
 
 template <typename T>
 int PartitionRandom(T* array, int begin, int end, bool (*comparer)(T, T)) {
-	int pivot = rand() / (end - begin + 1) + begin;
+	srand((int)time(0));
+	int pivot = rand() % (end - begin + 1) + begin;
 	return Partition(array, begin, end, pivot, comparer);
 }
 

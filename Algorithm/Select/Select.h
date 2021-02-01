@@ -14,13 +14,22 @@ int BinarySearch(T* array, int value, int begin, int end, bool(*comparer)(T, T))
 	}
 }
 
+/// <summary>
+/// Find the specified nth element in array
+/// </summary>
+/// <returns></returns>
 template <typename T>
-int RandomizedSelect(T* array, int begin, int end, int index, bool (*comparer)(T, T)) {
-	if (end - begin + 1 >= index) {
-		int partition = PartitionRandom(array, begin, end, comparer);
-		if (partition < index) return RandomizedSelect(array, partition + 1, end, index - partition, comparer);
-		else if (partition > index) return RandomizedSelect(array, begin, partition, index, comparer);
+T QuickSelect(T* array, int begin, int end, int index, QUICK_SORT_TYPE type, bool(*comparer)(T, T)) {
+	if (index < end - begin + 1) {
+		int partition = 0;
+		if (type == HEAD) partition = Partition(array, begin, end, begin, comparer);
+		else if (type == TAIL) partition = Partition(array, begin, end, end, comparer);
+		else partition = Partition(array, begin, end, (begin + end) / 2, comparer);
+		if (partition < index + begin) return QuickSelect(array, partition + 1, end, index + begin - partition - 1, type, comparer);
+		else if (partition > index + begin) return QuickSelect(array, begin, partition, index, type, comparer);
 		else return array[partition];
 	}
-	return -1;
+	throw "IndexOutOfRange";
 }
+
+
