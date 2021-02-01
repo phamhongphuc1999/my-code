@@ -58,3 +58,17 @@ void MergeSort(T* array, int begin, int end, bool (*comparer)(T, T)) {
 		MERGE(array, begin, end, medium, comparer);
 	}
 }
+
+template <typename T>
+void CountingSort(T* array, int length, int minimum, int maximum, bool (*comparer)(T, T)) {
+	int count = maximum - minimum + 1;
+	int* counts = new int[count];
+	for (int i = 0; i < count; i++) counts[i] = 0;
+	for (int i = 0; i < length; i++) counts[array[i] + minimum]++;
+	int index = 0;
+	for (int i = 0; i < length; i++) {
+		while (counts[index] == 0) index++;
+		array[i] = index + minimum;
+		counts[index]--;
+	}
+}

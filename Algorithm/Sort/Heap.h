@@ -19,7 +19,7 @@ void Heapify(T* heap, int index, int length, bool (*comparer)(T, T)) {
 	int right = RIGHT(index);
 	int largest = index;
 	if (left < length && !comparer(heap[index], heap[left])) largest = left;
-	if (right < length && !comparer(heap[index], heap[right])) largest = right;
+	if (right < length && !comparer(heap[largest], heap[right])) largest = right;
 	if (largest != index) {
 		SWAP(&heap[index], &heap[largest]);
 		Heapify(heap, largest, length, comparer);

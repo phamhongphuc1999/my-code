@@ -143,7 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inversion\inversion.h" />
+    <ClInclude Include="Select\Select.h" />
     <ClInclude Include="Sort\Heap.h" />
+    <ClInclude Include="Sort\QuickSort.h" />
     <ClInclude Include="Sort\Sort.h" />
     <ClInclude Include="utilities.h" />
   </ItemGroup>
