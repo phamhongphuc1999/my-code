@@ -41,6 +41,9 @@
     <ClInclude Include="Select\Select.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DynamicProgramming\matrix\Matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

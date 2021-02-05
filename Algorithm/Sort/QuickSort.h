@@ -10,13 +10,12 @@ template <typename T>
 int Partition(T* array, int begin, int end, int pivot, bool (*comparer)(T, T)) {
 	int low = begin, hight = end;
 	int value = array[pivot];
-	while (low < hight) {
+	while (true) {
 		while (comparer(array[low], value)) low++;
 		while (comparer(value, array[hight])) hight--;
-		SWAP(&array[low], &array[hight]);
+		if (low < hight) SWAP(&array[low], &array[hight]);
+		else return hight;
 	}
-	SWAP(&array[low], &array[hight]);
-	return hight;
 }
 
 template <typename T>

@@ -143,6 +143,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DynamicProgramming\matrix\Matrix.h" />
     <ClInclude Include="Inversion\inversion.h" />
     <ClInclude Include="Select\Select.h" />
     <ClInclude Include="Sort\Heap.h" />
