@@ -79,52 +79,52 @@ public:
 
 //khai báo lớp container(dùng để làm chuồng)
 class Container {
-	private:
-		int count;
-		int numberOfSpace;
-		Animal* animals;
+private:
+	int count;
+	int numberOfSpace;
+	Animal* animals;
 
-	public:
-		int Count() {
-			return count;
-		}
+public:
+	int Count() {
+		return count;
+	}
 
-		Container(int numberOfSpace) {
-			this->count = 0;
-			this->numberOfSpace = numberOfSpace;
-			this->animals = new Animal[numberOfSpace];
-		}
+	Container(int numberOfSpace) {
+		this->count = 0;
+		this->numberOfSpace = numberOfSpace;
+		this->animals = new Animal[numberOfSpace];
+	}
 
-		int AddSpace(int n) {
-			if (n > 0) {
-				Animal* newArray = new Animal[numberOfSpace + n];
-				for (int i = 0; i < count; i++) {
-					newArray[i] = this->animals[i];
-				}
-				this->animals = newArray;
-				numberOfSpace = numberOfSpace + n;
-			}
-			return numberOfSpace;
-		}
-
-		int AddAnimal(Animal animal) {
-			if (count < numberOfSpace) {
-				this->animals[count] = animal;
-				count++;
-			}
-			else {
-				AddSpace(10);
-				this->animals[count] = animal;
-				count++;
-			}
-			return count;
-		}
-
-		void PrintAnimalList() {
+	int AddSpace(int n) {
+		if (n > 0) {
+			Animal* newArray = new Animal[numberOfSpace + n];
 			for (int i = 0; i < count; i++) {
-				cout << (i + 1) << ") id: " << this->animals[i].Id() << " age: " << this->animals[i].Age() << " name: " << this->animals[i].Name() << " type: " << this->animals[i].Type() << endl;
+				newArray[i] = this->animals[i];
 			}
+			this->animals = newArray;
+			numberOfSpace = numberOfSpace + n;
 		}
+		return numberOfSpace;
+	}
+
+	int AddAnimal(Animal animal) {
+		if (count < numberOfSpace) {
+			this->animals[count] = animal;
+			count++;
+		}
+		else {
+			AddSpace(10);
+			this->animals[count] = animal;
+			count++;
+		}
+		return count;
+	}
+
+	void PrintAnimalList() {
+		for (int i = 0; i < count; i++) {
+			cout << (i + 1) << ") id: " << this->animals[i].Id() << " age: " << this->animals[i].Age() << " name: " << this->animals[i].Name() << " type: " << this->animals[i].Type() << endl;
+		}
+	}
 };
 
 void PrintCommonText() {
