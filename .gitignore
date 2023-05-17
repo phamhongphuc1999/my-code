@@ -1,4 +1,7 @@
 Debug/
 .vs/
+out/
 Source.cpp
 .Ds_Store
+
+.fake
