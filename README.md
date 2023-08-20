@@ -8,3 +8,4 @@ Some code
 | :------------------ | :------------------ |
 | [C++](./cpp/)       | My C and C++ source |
 | [Circom](./circom/) | My circom tutorial  |
+| [jena](./jena/)     | My jena tutorial    |

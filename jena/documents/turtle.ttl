@@ -1,0 +1,25 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mov: <http://mov.vn#>.
+@prefix human: <http://human.vn#>.
+
+mov:stars a rdf:Property;
+  rdfs:range mov:Actor.
+
+mov:Actor rdfs:subClassOf mov:Person;
+  a rdfs:Class.
+
+mov:Person a rdfs:Class.
+
+mov:Director rdfs:subClassOf mov:Person;
+  a rdfs:Class.
+
+human:jackson a mov:Director;
+  mov:name "Peter Jackson";
+  <directs> mov:hobbit.
+
+mov:hobbit mov:title "The Hobbit";
+  a mov:Movie;
+  <stats> human:freeman, human:mckellan;
+  mov:year "2012".
+
