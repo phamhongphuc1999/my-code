@@ -5,7 +5,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.VCARD;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void simpleJena() {
         String URL1 = "http://abc/animal1";
         String URL2 = "http://abc/animal2";
 
@@ -21,5 +21,11 @@ public class App {
         while (i.hasNext()) {
             System.out.println(i.nextResource().getProperty(VCARD.FN).toString());
         }
+        m.write(System.out, "Turtle");
+    }
+    
+    public static void main(String[] args) throws Exception {
+        // FusekiApp.connectFuseki("http://localhost:3030/database");
+        FusekiApp.createEmbeddedServer();
     }
 }

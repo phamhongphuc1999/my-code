@@ -22,4 +22,4 @@ The `JAVA PROJECTS` view allows you to manage your dependencies. More details ca
 - This is just a very simple [apache-jena](https://jena.apache.org/) project. The first thing you must prepare is making sure you installed Java and downloaded [apache-jena library](https://jena.apache.org/download/index.cgi).
 - Then, you have to import jena JAR to your java project. Personally, I use VSCode so some config steps certainly differ from using other IDE or editor.
 - For someone who want to use VScode like me, you should read [document](https://code.visualstudio.com/docs/java/java-tutorial) before starting.
-- Fore more detail about jena package, you can read [here](https://jena.apache.org/documentation/javadoc/jena).
+- For more detail about jena package, you can read [here](https://jena.apache.org/documentation/javadoc/jena). For more detail about how to connect to fuseki, you can read [here](https://jena.apache.org/documentation/rdfconnection/). Finally, if you want to learn more about jena, you can find all documents [here](https://jena.apache.org/documentation/).
