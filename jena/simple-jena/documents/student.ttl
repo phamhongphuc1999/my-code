@@ -1,0 +1,22 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix uni: <http://uni#> .
+
+uni:Person a rdfs:Class .
+uni:Student rdfs:subClassOf uni:Person .
+uni:Teacher rdfs:subClassOf uni:Person .
+uni:firstName a rdfs:Property;
+  rdfs:domain uni:Person;
+  rdfs:range rdfs:Literal.
+
+uni:lastName a rdfs:Property;
+  rdfs:domain uni:Person;
+  rdfs:range rdfs:Literal.
+
+uni:email a rdfs:Property;
+  rdfs:domain uni:Person;
+  rdfs:range rdfs:Literal.
+
+uni:Student uni:attends uni:Course.
+uni:Professor uni:teaches uni:Course.
+uni:University uni:ofASetOf uni:Course.

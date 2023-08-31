@@ -1,0 +1,23 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XLMSchema#> .
+@prefix : <http://www.seweb/afica#>
+
+:Herbivore a owl:Class;
+  rdfs:comment "Herbivores are exactly those animals that eat only plants or parts of plants" .
+
+:Herbivore owl:equivalentClass
+  [a owl:Class;
+   owl:intersectionOf 
+    (:Animal 
+     [a owl:Restriction;
+       owl:onProperty :eats;
+       owl:allValuesFrom 
+         [a owl:Class;
+          owl:equivalentClass
+           [ owl:unionOf 
+            (:Plant
+             [a owl:Restriction;
+              owl:onProperty :isPartOf;
+              owl:allValuesFrom :Plant])]]])].
