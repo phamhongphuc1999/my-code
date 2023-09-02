@@ -17,6 +17,19 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 
 The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
 
+## Test connection to fuseki database
+
+#### 1. Run database
+
+- First, you make sure you have fuseki-server to run server
+- I run fuseki with a .ttl config file
+
+```shell
+./fuseki-server --conf ./multiple-service.ttl
+```
+
+#### 2. Try to connect to database
+
 ## Get start
 
 - This is just a very simple [apache-jena](https://jena.apache.org/) project. The first thing you must prepare is making sure you installed Java and downloaded [apache-jena library](https://jena.apache.org/download/index.cgi).

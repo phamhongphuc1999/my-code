@@ -1,8 +1,8 @@
-<div align="center">
+<h1>
 
 Some code
 
-</div>
+</h1>
 
 | Folder              | Description         |
 | :------------------ | :------------------ |

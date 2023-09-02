@@ -1,34 +1,24 @@
-import org.apache.jena.fuseki.main.FusekiServer;
-import org.apache.jena.query.Dataset;
-import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdfconnection.RDFConnection;
 
 public class FusekiApp {
-  public static void connectFuseki(String serviceURI) {
-    RDFConnection connection = RDFConnection.connect(serviceURI);
-    connection.load("documents/turtle.ttl");
-    QueryExecution qExec = connection.query("SELECT DISTINCT ?s { ?s ?p ?o }");
+  public static void ConnectTo() {
+    RDFConnection conn = RDFConnection.connect("http://localhost:3030/ds/");
+    QueryExecution qExec = conn.query("SELECT * WHERE {\n" + //
+        "  ?s ?p ?o.\n" + //
+        "}") ;
     ResultSet rs = qExec.execSelect();
-    while (rs.hasNext()) {
+    while(rs.hasNext()) {
       QuerySolution qs = rs.next();
-      Resource subject = qs.getResource("s");
-      System.out.println("Subject: " + subject);
+      RDFNode subject = qs.get("s");
+      RDFNode pred = qs.get("p");
+      RDFNode object = qs.get("o");
+      System.out.println("Subject: " + subject + " pred: " + pred + " object: " + object);
     }
     qExec.close();
-    connection.close();
-  }
-  
-  public static void createEmbeddedServer() {
-    Dataset ds = DatasetFactory.createTxnMem();
-    FusekiServer server = FusekiServer.create()
-                .port(3333)
-                .add("/ds", ds, true)
-                .build() ;
-    server.start();
-    // server.stop();
+    conn.close();
   }
 }

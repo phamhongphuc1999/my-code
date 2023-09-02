@@ -69,7 +69,6 @@ public class App {
     }
     
     public static void main(String[] args) throws Exception {
-        // App.ontology();
-        App.statement();
+        FusekiApp.ConnectTo();
     }
 }
