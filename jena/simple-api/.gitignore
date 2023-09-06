@@ -1,2 +1,3 @@
 /docker-config/databases
 /docker-config/logs
+.fake

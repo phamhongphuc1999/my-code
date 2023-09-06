@@ -1,0 +1,25 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix v: <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+v:Bus rdfs:subClassOf v:Vehicle.
+
+v:Driver owl:equivalentClass [
+  owl:intersectionOf (v:Person
+  [a owl:Restriction;
+  owl:onProperty v:drive;
+  owl:minCardinality 1])
+].
+
+[
+  owl:intersectionOf (v:Driver
+  [a owl:Restriction;
+  owl:onProperty v:drive;
+  owl:someValuesFrom v:Bus])
+] rdfs:subClassOf v:BusDriver.
+
+v:B001 a v:Bus.
+v:NVA v:drive v:B001.
+v:NVA a v:Person.
