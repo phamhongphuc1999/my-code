@@ -1,0 +1,53 @@
+## ông của jane.
+
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX d: <http://learningsparql.com/ns/data#> 
+PREFIX ab: <http://learningsparql.com/ns/addressbook#> 
+
+SELECT ?x WHERE {
+  ?y ab:hasParent ?x.
+  d:jane ab:hasParent ?y.
+}
+
+## ông nội của jane.
+
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX d: <http://learningsparql.com/ns/data#> 
+PREFIX ab: <http://learningsparql.com/ns/addressbook#> 
+
+SELECT ?x WHERE {
+  ?y ab:hasParent ?x.
+  d:jane ab:hasParent ?y.
+  ?y ab:gender	d:male .
+  ?x ab:gender	d:male .
+}
+
+## kiểm tra jane và gene có phải anh chị em ruột không
+
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX d: <http://learningsparql.com/ns/data#> 
+PREFIX ab: <http://learningsparql.com/ns/addressbook#> 
+
+ASK WHERE {
+  d:gene ab:hasParent ?y1.
+  d:joan ab:hasParent ?y1.
+}
+
+## đếm số anh chị em của gene
+
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX d: <http://learningsparql.com/ns/data#> 
+PREFIX ab: <http://learningsparql.com/ns/addressbook#> 
+
+SELECT (COUNT(?x) AS ?z) {
+  d:gene ab:hasParent ?y.
+  ?x ab:hasParent ?y.
+}

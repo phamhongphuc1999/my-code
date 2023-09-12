@@ -42,8 +42,8 @@ PREFIX tdb2:    <http://jena.apache.org/2016/tdb#>
 :model_inf a ja:InfModel ;
      ja:baseModel :tdbGraph ;
      ja:reasoner [
-         ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLFBRuleReasoner>
-         ja:rulesFrom <./rule.ttl>
+        ### ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLFBRuleReasoner>
+        ja:rulesFrom <file:rule.rules>;
      ] .
 
 :tdbGraph rdf:type tdb2:GraphTDB2 ;

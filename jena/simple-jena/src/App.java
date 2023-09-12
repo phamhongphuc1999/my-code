@@ -41,7 +41,6 @@ public class App {
 
     public static void load() {
         Model m = ModelFactory.createDefaultModel();
-        // read into the model.
         m.read("documents/family/family.ttl");
         m.write(System.out, "RDF/XML");
     }
@@ -71,8 +70,17 @@ public class App {
         printStatements(infoModel, nForce, null, null);
     }
 
+    public static void statement1(String filePath, String resource) {
+        Model rawData = RDFDataMgr.loadModel(filePath);
+        Reasoner reasoner = ReasonerRegistry.getOWLReasoner();
+        InfModel infoModel = ModelFactory.createInfModel(reasoner, rawData);
+        Resource nForce = infoModel.getResource(resource);
+        System.out.println("nForce *:");
+        printStatements(infoModel, nForce, null, null);
+    }
+
     public static void rule() {
-        Model rawData = RDFDataMgr.loadModel("documents/rule.ttl");
+        Model rawData = RDFDataMgr.loadModel("documents/rule-example/rule.ttl");
         String ruleSrc = "@prefix : <http://semweb.edu.vn/rule-demo#> .\n" + //
                 "[rule1: (?a :p ?b) (?b :p ?c) -> (?a :p ?c)]";
         List<Rule> rules = Rule.parseRules(ruleSrc);
@@ -80,13 +88,29 @@ public class App {
         InfModel inf = ModelFactory.createInfModel(reasoner, rawData);
         System.out.println("A * * =>");
         Resource nForce = inf.getResource("http://semweb.edu.vn/rule-demo#a");
-        StmtIterator list = inf.listStatements(nForce, null, (RDFNode)null);
+        StmtIterator list = inf.listStatements(nForce, null, (RDFNode) null);
+        while (list.hasNext()) {
+            System.out.println(" - " + list.next());
+        }
+    }
+    
+    public static void familyRule() {
+        Model rawData = RDFDataMgr.loadModel("documents/rule-example/family.ttl");
+        String ruleSrc = "@prefix : <http://semweb.edu.vn/rule-demo#> .\n" + //
+                "[rule1: (?x :fatherOf ?y) (?z :brotherOf ?x) -> (?z :uncle ?y)] \n" + //
+                "[rule2: (?x :motherOf ?y) (?z :brotherOf ?x) -> (?z :uncle ?y)]";
+        List<Rule> rules = Rule.parseRules(ruleSrc);
+        Reasoner reasoner = new GenericRuleReasoner(rules);
+        InfModel inf = ModelFactory.createInfModel(reasoner, rawData);
+        System.out.println("A * * =>");
+        Resource nForce = inf.getResource("http://semweb.edu.vn/rule-demo#david");
+        StmtIterator list = inf.listStatements(nForce, null, (RDFNode) null);
         while (list.hasNext()) {
             System.out.println(" - " + list.next());
         }
     }
     
     public static void main(String[] args) throws Exception {
-        App.rule();
+        App.statement1("documents/rule-example/family.ttl", "http://semweb.edu.vn/rule-demo#peter");
     }
 }

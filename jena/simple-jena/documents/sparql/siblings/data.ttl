@@ -3,6 +3,13 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix : <http://semweb.edu.vn/rule-demo#> .
 
-:a :p :b.
-:b :p :c.
-:b :p :d.
+:Peter :marriedTo :Julia;
+ :fatherOf :Caludia.
+
+:Caludia :sisterOf :Stefan.
+:Stefan :childOf :Julia;
+  :knows :Marc.
+
+:Marc :knows :Julia.
+
+:Julia :motherOf :Caludia.

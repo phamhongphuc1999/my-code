@@ -1,0 +1,13 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix d: <http://learningsparql.com/ns/data#> .
+@prefix ab: <http://learningsparql.com/ns/addressbook#> .
+
+d:jane ab:hasParent d:gene .
+d:gene ab:hasParent d:pat ;
+ab:gender	d:female .
+d:joan ab:hasParent d:pat ;
+ab:gender d:female .
+d:pat ab:gender	d:male .
+d:mike ab:hasParent d:joan .

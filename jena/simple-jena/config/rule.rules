@@ -1,0 +1,4 @@
+@prefix : <http://semweb.edu.vn/rule-demo#> .
+[rule1: (?a :p ?b) (?b :p ?c) -> (?a :p ?c)]
+[rule2: (?x :fatherOf ?y) (?z :brotherOf ?x) -> (?z :uncle ?y)]
+[rule3: (?x :motherOf ?y) (?z :brotherOf ?x) -> (?z :uncle ?y)]
