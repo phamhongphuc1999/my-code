@@ -1,0 +1,13 @@
+@include <owlmicro>
+@prefix : <http://www.semanticweb.org/abc#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+[rule1: (?c :inArea ?a) (?a :hasLeague ?l) (?c :hasTeam ?n) -> (?n :belongToLeague ?l)]
+# [rule2: (?NT :belongToLeague ?L), (?LS :isLeague ?L) -> (?NT :joinedLeagueSeason ?LS)]
+# [rule3: (?p rdf:type :Player), (?p :joinedYear ?y1), (?p :leftYear ?y2), (?ls rdf:type :LeagueSeason), (?ls :heldInYear ?y3), greaterThan(?y3, ?y1), greaterThan(?y2, ?y3) -> (?p :joinedLeagueSeason ?ls)]
+# [rule4: (?NT :isChampionOf ?LS), (?P rdf:type :Player), (?P :joinedLeagueSeason ?LS) -> (?P :hasTitle ?LS)]
+
+# [rull: (?p :hasPosition :Goalkeeper) (?p1 :hasPosition :Forward) -> (?p :know :p1)]
+[rule1: (?c :inArea ?a) -> (?c :know ?a)]
+[rule2: (?a :belongToArea ?l) -> (?l :hasLeague ?a)]
+[rule3: (?a :hasLeague ?l) -> (?a :know1 ?l)]

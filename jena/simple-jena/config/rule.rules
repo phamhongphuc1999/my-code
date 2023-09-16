@@ -1,4 +1,21 @@
-@prefix : <http://semweb.edu.vn/rule-demo#> .
-[rule1: (?a :p ?b) (?b :p ?c) -> (?a :p ?c)]
-[rule2: (?x :fatherOf ?y) (?z :brotherOf ?x) -> (?z :uncle ?y)]
-[rule3: (?x :motherOf ?y) (?z :brotherOf ?x) -> (?z :uncle ?y)]
+@include <owlmicro>
+@prefix : <http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+# If country C in area A, area A has L league, country C has NT national team, then NT belong to L League
+[rule1: (?C :inArea ?A) (?A :hasLeague ?L) (?C :hasTeam ?NT) -> (?NT :belongToLeague ?L)]
+
+# If NT national team belong to L league, league season LS is a L league, then NT join LS 
+[rule2: (?NT :belongToLeague ?L) (?LS :isLeague ?L) -> (?NT :joinedLeagueSeason ?LS)]
+
+[rule3: (?P :joinedYear ?Y1) (?P :leftYear ?Y2) (?LS :heldInYear ?Y3) greaterThan(?Y3, ?Y1) greaterThan(?Y2, ?Y3) -> (?P :inLeagueSeason ?LS)]
+
+[rule4: (?NT :isChampionOf ?LS) (?P :inLeagueSeason ?LS) -> (?P :hasTitle ?LS)]
+
+# // :belongToArea is inversion of :hasLeague
+[rule5: (?L :belongToArea ?A) -> (?A :hasLeague ?L)]
+[rule6: (?A :hasLeague ?L) -> (?L :belongToArea ?A)]
+
+# // :hasChampion is inversion of :isChampionOf 
+[rule7: (?LS :hasChampion ?NT) -> (?NT :isChampionOf ?LS)]
+[rule8: (?NT :isChampionOf ?LS) -> (?LS :hasChampion ?NT)]

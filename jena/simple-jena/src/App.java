@@ -39,9 +39,9 @@ public class App {
         m.write(System.out, "Turtle");
     }
 
-    public static void load() {
+    public static void load(String path) {
         Model m = ModelFactory.createDefaultModel();
-        m.read("documents/family/family.ttl");
+        m.read(path);
         m.write(System.out, "RDF/XML");
     }
     
@@ -80,14 +80,12 @@ public class App {
     }
 
     public static void rule() {
-        Model rawData = RDFDataMgr.loadModel("documents/rule-example/rule.ttl");
-        String ruleSrc = "@prefix : <http://semweb.edu.vn/rule-demo#> .\n" + //
-                "[rule1: (?a :p ?b) (?b :p ?c) -> (?a :p ?c)]";
-        List<Rule> rules = Rule.parseRules(ruleSrc);
+        Model rawData = RDFDataMgr.loadModel("documents/test-football/data.ttl");
+        List<Rule> rules = Rule.rulesFromURL("documents/test-football/rule.rules");
         Reasoner reasoner = new GenericRuleReasoner(rules);
         InfModel inf = ModelFactory.createInfModel(reasoner, rawData);
         System.out.println("A * * =>");
-        Resource nForce = inf.getResource("http://semweb.edu.vn/rule-demo#a");
+        Resource nForce = inf.getResource("http://www.semanticweb.org/abc#NT1");
         StmtIterator list = inf.listStatements(nForce, null, (RDFNode) null);
         while (list.hasNext()) {
             System.out.println(" - " + list.next());
@@ -111,6 +109,6 @@ public class App {
     }
     
     public static void main(String[] args) throws Exception {
-        App.statement1("documents/rule-example/family.ttl", "http://semweb.edu.vn/rule-demo#peter");
+        App.rule();
     }
 }

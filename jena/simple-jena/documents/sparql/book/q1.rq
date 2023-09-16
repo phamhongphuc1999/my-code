@@ -1,0 +1,33 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX ex: <http://eg.org/>
+
+SELECT (COUNT(?x) as ?numberOfBooks) ?y WHERE {
+  ?x ex:author ?y.
+}
+GROUP BY ?y
+
+## 
+
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX ex: <http://eg.org/>
+
+SELECT ?book WHERE {
+  {?book ex:author ex:Shakespeare.} UNION {?book ex:author ex:Brooke.}
+}
+
+##
+
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX ex: <http://eg.org/>
+
+SELECT ?book WHERE {
+  {?book ex:author ex:Shakespeare.} UNION {?book ex:author ex:Brooke.}
+  ?book ex:price ?price.
+  filter (?price < 15)
+}

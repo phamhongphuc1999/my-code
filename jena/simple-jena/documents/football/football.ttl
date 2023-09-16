@@ -1,0 +1,270 @@
+@prefix : <http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/> .
+
+<http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7#belongToCountry
+:belongToCountry rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Person ;
+                 rdfs:range :Country .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7#belongToLeague
+:belongToLeague rdf:type owl:ObjectProperty ;
+                rdfs:domain :NationalTeam ;
+                rdfs:range :League .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7#inArea
+:inArea rdf:type owl:ObjectProperty ;
+        rdfs:domain :Country ;
+        rdfs:range :Area .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7#inLeagueSeason
+:inLeagueSeason rdf:type owl:ObjectProperty ;
+                rdfs:domain :Player ;
+                rdfs:range :LeagueSeason .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7#isLeague
+:isLeague rdf:type owl:ObjectProperty ;
+          rdfs:domain :LeagueSeason ;
+          rdfs:range :League .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/belongToArea
+:belongToArea rdf:type owl:ObjectProperty ;
+              owl:inverseOf :hasLeague ;
+              rdfs:domain :League ;
+              rdfs:range :Area .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/hasChampion
+:hasChampion rdf:type owl:ObjectProperty ;
+             owl:inverseOf :isChampionOf ;
+             rdfs:domain :LeagueSeason ;
+             rdfs:range :NationalTeam .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/hasLeague
+:hasLeague rdf:type owl:ObjectProperty ;
+           rdfs:domain :Area ;
+           rdfs:range :League .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/hasPosition
+:hasPosition rdf:type owl:ObjectProperty ;
+             rdfs:domain :Player ;
+             rdfs:range :PlayerPosition .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/hasTeam
+:hasTeam rdf:type owl:ObjectProperty ;
+         rdfs:domain :Country ;
+         rdfs:range :NationalTeam .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/hasTitle
+:hasTitle rdf:type owl:ObjectProperty ;
+          rdfs:domain :Player ;
+          rdfs:range :LeagueSeason .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/isChampionOf
+:isChampionOf rdf:type owl:ObjectProperty ;
+              rdfs:domain :NationalTeam ;
+              rdfs:range :LeagueSeason .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/join
+:join rdf:type owl:ObjectProperty ;
+      rdfs:domain :Country ;
+      rdfs:range :League .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/joinLeague
+:joinLeague rdf:type owl:ObjectProperty ;
+            rdfs:domain :NationalTeam ;
+            rdfs:range :LeagueSeason .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/joinedLeagueSeason
+:joinedLeagueSeason rdf:type owl:ObjectProperty ;
+                    rdfs:domain :NationalTeam ;
+                    rdfs:range :LeagueSeason .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7#name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Person ;
+      rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/abstract
+:abstract rdf:type owl:DatatypeProperty ;
+          rdfs:domain :League ;
+          rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/birthDate
+:birthDate rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Person ;
+           rdfs:range xsd:dateTimeStamp .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:domain :League ;
+             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/goals
+:goals rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Player ;
+       rdfs:range xsd:nonNegativeInteger .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/height
+:height rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Person ;
+        rdfs:range xsd:nonNegativeInteger .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/heldInYear
+:heldInYear rdf:type owl:DatatypeProperty ;
+            rdfs:domain :LeagueSeason ;
+            rdfs:range xsd:nonNegativeInteger .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/joinedYear
+:joinedYear rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Player ;
+            rdfs:range xsd:nonNegativeInteger .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/leftYear
+:leftYear rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Player ;
+          rdfs:range xsd:nonNegativeInteger .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/numberOfCountries
+:numberOfCountries rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :League ;
+                   rdfs:range xsd:nonNegativeInteger .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/thumbnail
+:thumbnail rdf:type owl:DatatypeProperty ;
+           rdfs:domain :League ;
+           rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/website
+:website rdf:type owl:DatatypeProperty ;
+         rdfs:domain :League ;
+         rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Africa
+:Africa rdf:type owl:Class ;
+        rdfs:subClassOf :Area .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Ameria
+:Ameria rdf:type owl:Class ;
+        rdfs:subClassOf :Area .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Area
+:Area rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Asia
+:Asia rdf:type owl:Class ;
+      rdfs:subClassOf :Area .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Coach
+:Coach rdf:type owl:Class ;
+       rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Country
+:Country rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Defender
+:Defender rdf:type owl:Class ;
+          rdfs:subClassOf :PlayerPosition .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Europe
+:Europe rdf:type owl:Class ;
+        rdfs:subClassOf :Area .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Forward
+:Forward rdf:type owl:Class ;
+         rdfs:subClassOf :PlayerPosition .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/GoalKeeper
+:GoalKeeper rdf:type owl:Class ;
+            rdfs:subClassOf :PlayerPosition .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/League
+:League rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/LeagueSeason
+:LeagueSeason rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Midfielder
+:Midfielder rdf:type owl:Class ;
+            rdfs:subClassOf :PlayerPosition .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/NationalTeam
+:NationalTeam rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Oceania
+:Oceania rdf:type owl:Class ;
+         rdfs:subClassOf :Area .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Person
+:Person rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/Player
+:Player rdf:type owl:Class ;
+        rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/phamhongphuc/ontologies/2023/8/untitled-ontology-7/PlayerPosition
+:PlayerPosition rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi
