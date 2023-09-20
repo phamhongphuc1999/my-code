@@ -1,0 +1,37 @@
+Exercise 2.4 Represent the following sentences 
+• Romeo thought that Juliet was dead.
+• John believes that Mary wants to marry him.
+• The dwarf noticed that somebody had been eating from his plate.
+Graphically by means of reified triples.
+Write a turtle document.
+
+Exercise 2.5 Decide whether the following propositions can be satisfactorily
+modeled in RDFS and, if so, give the corresponding RDF(S) specification.
+• Every pizza is a meal.
+• Pizzas always have at least two toppings.
+• Every pizza from the class PizzaMargarita has a Tomato topping.
+• Everything having a topping is a pizza.
+• No pizza from the class PizzaMargarita has a topping from the class
+Meat.
+• “Having a topping” is a containedness relation.
+
+Exercise 3.4 The empty graph does not contain any triples (i.e. it corre-
+sponds to the empty set). Give derivations showing that the empty graph
+RDFS-entails the following triples:
+rdfs:Resource rdf:type rdfs:Class .
+rdfs:Class rdf:type rdfs:Class .
+rdfs:Literal rdf:type rdfs:Class .
+rdf:XMLLiteral rdf:type rdfs:Class .
+rdfs:Datatype rdf:type rdfs:Class .
+rdf:Seq rdf:type rdfs:Class .
+rdf:Bag rdf:type rdfs:Class .
+rdf:Alt rdf:type rdfs:Class .
+rdfs:Container rdf:type rdfs:Class .
+rdf:List rdf:type rdfs:Class .
+rdfs:ContainerMembershipProperty rdf:type rdfs:Class .
+rdf:Property rdf:type rdfs:Class .
+rdf:Statement rdf:type rdfs:Class .
+rdfs:domain rdf:type rdf:Property .
+rdfs:range rdf:type rdf:Property .
+
+Exercise 4.1 Use OWL DL to model the following sentences:

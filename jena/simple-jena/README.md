@@ -25,7 +25,7 @@ The `JAVA PROJECTS` view allows you to manage your dependencies. More details ca
 - I run fuseki with a .ttl config file
 
 ```shell
-./fuseki-server --conf ./multiple-service.ttl
+./fuseki-server --conf ./config.ttl
 ```
 
 #### 2. Try to connect to database
