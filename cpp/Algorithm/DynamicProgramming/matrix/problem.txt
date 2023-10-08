@@ -1,3 +1,0 @@
-﻿cho một tập n ma trận sau (A1, A2, A3, ..., An) với Ai(i = 1....n) có kích thước p(i - 1) X p(i). Xác định ngoặc đơn đầy đủ sau cho số lượng phép nhân là nhỏ nhất
-VD: cho một tập ma trận (A1, A2, A3), A1 có kích thức 10x100, A2 100x5 và A3 5x50, nếu nhân theo phép ngoặc đơn ((A1A2)A3) ta thực hiện 10x100x5 phép nhân vô hướng để nhân A1 với A2, cộng với 10x5x50 phép nhân kết quả với A3, tổng cộng phải thực hiện 7500 phép nhân
-Nhưng nếu thực hiện theo phép ngoặc (A1(A2A3)) ta phải thực hiện 75000 phép nhân vô hướng. Như vậy, cách ngoặc thứ nhất nhanh gấp 10 lần cách ngoặc thứ hai

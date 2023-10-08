@@ -1,6 +1,0 @@
-﻿một dãy con của của một dãy cho trước là dãy ban đầu được xoa đi một vài phần tử
-Cho hai dãy X và Y, dãy Z được gọi là dãy con chung của X và Y khi nó là dãy con của cả X và Y
-VD: X = <A, B, C, B, D, A, B>, Y = <B, D, C, A, B, A> thì dãy Z1 = <B, C, A> và Z2 = <B, C, B, A> đều là dãy con chung của X và Y, trong đó Z2 được gọi là dãy con chung dài nhất vì không có dãy con chũng nào có chiều dài lớn hơn 4
-Bài toán:
-input: cho hai dãy số
-output: in ra dãy con chung dài nhất của chúng

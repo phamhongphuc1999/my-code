@@ -20,14 +20,17 @@ sudo apt -y install clang
 printf "${Green}Step 4.1: Check clang version${NC}\n"
 clang --version
 
-printf "${Green}Step 5: Install vim${NC}\n"
+printf "${Green}Step5: Install libomp${NC}\n"
+sudo apt -y install libomp-dev
+
+printf "${Green}Step 6: Install vim${NC}\n"
 sudo apt -y install vim
 
-printf "${Green}Step 5.1: Check vim version${NC}\n"
+printf "${Green}Step 6.1: Check vim version${NC}\n"
 vim --version
 
-printf "${Green}Step 6: Install git${NC}\n"
+printf "${Green}Step 7: Install git${NC}\n"
 sudo apt -y install git
 
-printf "${Green}Step 6.1: Check git version${NC}\n"
+printf "${Green}Step 7.1: Check git version${NC}\n"
 git --version
