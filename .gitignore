@@ -5,3 +5,4 @@ Source.cpp
 .Ds_Store
 
 .fake
+*.out
