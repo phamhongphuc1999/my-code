@@ -8,11 +8,15 @@ RESET = $(shell tput -Txterm sgr0)
 GRAY = $(shell tput -Txterm setaf 6)
 TARGET_MAX_CHAR_NUM = 20
 
-## Build clang.
+## Build c file with normal clang.
+build:
+	clang $(target) -o $(output).out
+
+## Build c file with clang and openmp.
 clang:
 	clang -fopenmp $(target) -o $(output).out
 
-## Build mpi.
+## Build c file with mpi.
 buildmpi:
 	mpicc $(target) -o $(output).out
 

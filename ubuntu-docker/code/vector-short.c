@@ -20,29 +20,23 @@ int main(int argc, char** argv) {
 	if (IDCPU==0) {
 		for (i=0;i<N;i++) { *(A+i) = i; *(B+i) = 2*i;}
 		for (i=0;i<Nc;i++) {*(Ac+i) = *(A+i); *(Bc+i) = *(B+i);}
-		for (id=1;id<NCPU;id++) {
-			MPI_Send(A+id*Nc,Nc,MPI_INT,id,id+1000,MPI_COMM_WORLD);
-			MPI_Send(B+id*Nc,Nc,MPI_INT,id,id+2000,MPI_COMM_WORLD);
-		}
-	} else {
-		MPI_Recv(Ac,Nc,MPI_INT,0,IDCPU+1000,MPI_COMM_WORLD,&trangthai);
-		MPI_Recv(Bc,Nc,MPI_INT,0,IDCPU+2000,MPI_COMM_WORLD,&trangthai);
 	}
+
+	MPI_Scatter(A, Nc, MPI_INT, Ac, Nc, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Scatter(B, Nc, MPI_INT, Bc, Nc, MPI_INT, 0, MPI_COMM_WORLD);
 
 	// Compute
 	for (i=0;i<Nc;i++)  *(Cc+i) = *(Ac+i) + *(Bc+i);
+
 // Gather Result
-	if (IDCPU!=0) {
-		MPI_Send(Cc,Nc,MPI_INT,0,IDCPU,MPI_COMM_WORLD);
-	} else {
-		for (i=0;i<Nc;i++) *(C+i) = *(Cc+i);
-		for (id=1;id<NCPU;id++)
-			MPI_Recv(C+id*Nc,Nc,MPI_INT,id,id,MPI_COMM_WORLD,&trangthai);
+  MPI_Gather(Cc, Nc, MPI_INT, C, Nc, MPI_INT, 0, MPI_COMM_WORLD);
+
+  if (IDCPU==0) {
 		printf("C: \n");
 		for (i=0;i<N;i++) printf("%d ",*(C+i));
 		printf("\n");
-	}
-	
-    MPI_Finalize();
-return 0;
+	} 
+
+  MPI_Finalize();
+  return 0;
 }
