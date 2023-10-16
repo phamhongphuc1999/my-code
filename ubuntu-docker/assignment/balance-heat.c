@@ -14,7 +14,7 @@ void WriteFile(float *T, char* fileName) {
   FILE *result = fopen(fileName, "a");
   for (int i = 0; i < numOfRows; i++) {
     for (int j = 0; j < numOfColumns; j++) {
-      fprintf(result, "%lf\t", *(T + i * numOfColumns + j));
+      fprintf(result, "%lf,", *(T + i * numOfColumns + j));
     }
     fprintf(result, "\n");
   }
@@ -27,7 +27,7 @@ void Initialization(float *T) {
     for (int j = 0; j < numOfColumns; j++) {
       if (i >= (numOfRows / 2 - 5) && i < (numOfRows / 2 + 5) && j >= (numOfColumns / 2 - 5) && j < (numOfColumns / 2 + 5)) {
         *(T + i * numOfColumns + j) = 100.0;
-      } else *(T + i * numOfColumns + j) = 25.0;
+      } else *(T + i * numOfColumns + j) = 50.0;
     }
   }
 }
@@ -124,13 +124,14 @@ int main(int argc, char *argv[]) {
   if (IDCPU == 0) {
     printf("number of cpus: %d, %d\n------------\n", NCPU, rowsPerCpu);
     Initialization(T);
+    // WriteFile(T, "result_init.txt");
   }
 
   float time = 0;
   int counter = 0;
   MPI_Scatter(T, dataSize, MPI_FLOAT, Tc, dataSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
-  // for (int i = 0; i < 663; i++)
-  while (time <= 100 && cpuMax > TOLERANCE)
+  for (int i = 0; i < 100; i++)
+  // while (time <= 100 && cpuMax > TOLERANCE)
   {
     counter++;
     if (IDCPU == 0) {

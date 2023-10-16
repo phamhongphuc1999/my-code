@@ -6,3 +6,4 @@ Source.cpp
 
 .fake
 *.out
+result*.txt
