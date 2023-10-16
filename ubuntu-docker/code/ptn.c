@@ -3,74 +3,100 @@
 #include <malloc.h>
 #include <math.h>
 #include <time.h>
-#include <omp.h>
 
-#define  M       40
-#define  Time    1
+#define  m       30
+#define  n       30
+#define  T       100
 #define  dt      0.01
 #define  dx      0.1
 #define  D       0.1
 //=========================
-void DisplayArray(float *T, int size)
-{
-  int i;
-  for(i=0;i<size;i++)
-    printf("  %.2f",*(T+i));
-  printf("\n");  
-}
-//=========================
-void KhoiTao(float *T)
+void DisplayMatrix(float *A, int row,  int col)
 {
   int i,j;
-  for (  i = 0 ; i < M ; i++ )
-      *(T+i) = 25.0;
+  for(i=0;i<row;i++){
+    for(j=0;j<col;j++) printf("  %f",*(A+i*col+j));
+    printf("\n");
+  }
 }
 //=========================
-void Daoham(float *T, float *dT, int start, int stop)
+void Write2File(float *C)
 {
-  int i;
-  float c,l,r;
-  for (  i = start ; i < stop ; i++ )
+FILE *result=fopen("result3.txt", "a");
+int i,j;
+
+for(i=0;i<m;i++) 
+{
+for(j=0;j<n;j++) 
+{ 
+fprintf(result, "%lf\t", *(C+i*n+j));
+}
+fprintf(result, "\n");
+}
+
+fclose(result);
+}
+//=========================
+void KhoiTao(float *C)
+{
+  int i,j;
+for (  i = 0 ; i < m ; i++ )
+  for ( j = 0 ; j < n ; j++ ){
+    if (i>=(m/2-5)&&i<(m/2+5)&&j>=(n/2-5)&&j<(n/2+5)) 
+      *(C+i*n+j) = 80.0;
+    else
+      *(C+i*n+j) = 25.0;
+  }
+}
+//=========================
+void FD(float *C, float *dC)
+{
+int i, j;
+float c,u,d,l,r;
+for (  i = 0 ; i < m ; i++ )
+  for ( j = 0 ; j < n ; j++ )
     {
-      c = *(T+i);
-      l = (i==0)   ? 100.0 : *(T+(i-1));
-      r = (i==M-1) ? 25.0  : *(T+(i+1));
-      *(dT+i) = (r-2*c+l)/(dx*dx);
+      c = *(C+i*n+j);
+      u = (i==0)   ? 25 : *(C+(i-1)*n+j);
+      d = (i==m-1) ? 25 : *(C+(i+1)*n+j);
+      l = (j==0)   ? 25 : *(C+i*n+j-1);
+      r = (j==n-1) ? 25 : *(C+i*n+j+1);
+      *(dC+i*n+j) = (D/(dx*dx))*(u+d+l+r-4*c);
     }
 }
 //=========================
 int main()
 {
-  int i,t, Ntime;
-  float *T,*dT;
-  T  = (float *) malloc ((M)*sizeof(float));
-  dT = (float *) malloc ((M)*sizeof(float));
-  KhoiTao(T);
-  printf("Gia tri khoi tao:\n");
-  // DisplayArray(T,M);
-
-  int NT, ID, Mc, start, stop;
-  omp_set_num_threads(10);  
-  #pragma omp parallel private(ID,start,stop,i,t)
-  {
-    ID = omp_get_thread_num();
-    NT = omp_get_num_threads();
-    Mc = M/NT;
-    start = ID*Mc;
-    stop  = start + Mc;
-    Ntime = Time/dt;
-    for (t=0;t<Ntime;t++)
-    {
-      #pragma omp barrier
-      Daoham(T, dT, start, stop);
-      #pragma omp barrier
-      for (i = start;i < stop;i++ )
-        *(T+i) = *(T+i) + D*dt*(*(dT+i));
-    }
-  }
+int i,j, count;
+float t;
+time_t t1,t2;
+t=0;
+float *C,*dC;
+C = (float *) malloc ((m*n)*sizeof(float));
+dC = (float *) malloc ((m*n)*sizeof(float));
+KhoiTao(C);
+//Write2File(C);
+//printf("Gia tri khoi tao:\n");
+DisplayMatrix(C, m, n);
+printf("\n\n");
+count = 0;
+t1=time(NULL);
+while (t<=T)
+{
+  FD(C, dC);
+  for (  i = 0 ; i < m ; i++ )
+    for ( j = 0 ; j < n ; j++ )
+      *(C+i*n+j) = *(C+i*n+j) + dt*(*(dC+i*n+j));
+  t=t+dt;
+  count=count+1;
+  //if (count%5==0) Write2File(C);
+}
+Write2File(C);
+t2=time(NULL);
+//FD(C, dC);
+//printf("Gia tri cuoi cung:\n");
+DisplayMatrix(C, m, n);
 //
-  printf("Result of OMP:\n");
-  DisplayArray(T, M);
+printf ("\tThe Calculation time:%ld\n",(long)(t2 - t1));
 return 0;
 }
-

@@ -1,76 +1,85 @@
 #include <stdio.h>
+#include <math.h>
 #include <malloc.h>
-#define numOfRows 4
-#define numOfColumns 4
+#define numOfRows 30
+#define numOfColumns 30
 #define D 0.1
 #define dt 0.01
 #define dx 0.1
 
-void Initialization(float **T) {
+void Initialization(float *T) {
   for (int i = 0; i < numOfRows; i++)
   {
     for (int j = 0; j < numOfColumns; j++) {
-      if (i == 0 || i == numOfRows - 1 || j == 0 || j == numOfColumns - 1)
-        *(*(T + i) + j) = 1;
-      else
-        *(*(T + i) + j) = 0;
+      if (i >= (numOfRows / 2 - 5) && i < (numOfRows / 2 + 5) && j >= (numOfColumns / 2 - 5) && j < (numOfColumns / 2 + 5)) {
+        *(T + i * numOfColumns + j) = 80.0;
+      } else *(T + i * numOfColumns + j) = 25.0;
     }
   }
 }
 
-void Display(float **T) {
+void Display(float *T) {
   for (int i = 0; i < numOfRows; i++) {
-    for (int j = 0; j < numOfColumns; j++)
-      printf("%f ", T[i][j]);
+    for (int j = 0; j < numOfColumns; j++) {
+      printf("%f ", *(T + i * numOfColumns + j));
+    }
     printf("\n");
   }
 }
 
-float SecondDerivative(float c, float newUp, float oldDown, float newLeft, float oldRight) {
-  float DT = c + D * dt * (newUp + oldDown + newLeft + oldRight - 4 * c) / (dx * dx);
-  return DT;
+float SecondDerivative(float c, float up, float down, float left, float right) {
+  return D * dt * (up + down + left + right - 4 * c) / (dx * dx);
 }
 
-void IterativeSolve(float **T) {
+// gauss seidel method
+void GaussIterativeSolve(float *T, float *dts) {
   for (int i = 0; i < numOfRows; i++) {
     for (int j = 0; j < numOfColumns; j++) {
-      float c = T[i][j];
-      float newUp = 0;
-      if (i == 0) 
-        newUp = T[i][j];
-      else
-        newUp = T[i - 1][j];
-      float oldDown = 0;
-      if (i == numOfRows - 1)
-        oldDown = T[i][j];
-      else
-        oldDown = T[i + 1][j];
-      float newLeft = 0;
-      if (j == 0)
-        newLeft = T[i][j];
-      else
-        newLeft = T[i][j - 1];
-      float oldRight = 0;
-      if (j == numOfColumns - 1)
-        oldRight = T[i][j];
-      else
-        oldRight = T[i][j + 1];
-      T[i][j] = SecondDerivative(c, newUp, oldDown, newLeft, oldRight);
+      float c = *(T + i * numOfColumns + j);
+      float newUp = i == 0 ? 25 : *(T + (i - 1) * numOfColumns + j);
+      float oldDown = i == numOfRows - 1 ? 25 : *(T + (i + 1) * numOfColumns + j);
+      float newLeft = j == 0 ? 25 : *(T + i * numOfColumns + j - 1);
+      float oldRight = j == numOfColumns - 1 ? 25 : *(T + i * numOfColumns + j + 1);
+      *(dts + i * numOfColumns + j) = SecondDerivative(c, newUp, oldDown, newLeft, oldRight);
+      *(T + i * numOfColumns + j) = *(T + i * numOfColumns + j) + *(dts + i * numOfColumns + j);
+    }
+  }
+}
+
+// jacobi method
+void JacobiIterativeSolve(float *T, float *O) {
+  for (int i = 0; i < numOfRows; i++) {
+    for (int j = 0; j < numOfColumns; j++) {
+      float c = *(T + i * numOfColumns + j);
+      float up = i == 0 ? 25 : *(T + (i - 1) * numOfColumns + j);
+      float down = i == numOfRows - 1 ? 25 : *(T + (i + 1) * numOfColumns + j);
+      float left = j == 0 ? 25 : *(T + i * numOfColumns + j - 1);
+      float right = j == numOfColumns - 1 ? 25 : *(T + i * numOfColumns + j + 1);
+      *(T + i * numOfColumns + j) = SecondDerivative(c, up, down, left, right);
+    }
+  }
+  for (int i = 0; i < numOfRows; i++) {
+    for (int j = 0; j < numOfColumns; j++) {
+      *(O + i * numOfColumns + j) = *(T + i * numOfColumns + j);
     }
   }
 }
 
 int main(int argc, char *argv[]) {
-  float **T;
-  T = (float **)malloc(numOfRows * sizeof(float*));
-  for (int i = 0; i < numOfRows; i++) {
-    T[i] = (float *)malloc(numOfColumns * sizeof(float));
-  }
+  float *T = (float *)malloc(numOfRows * numOfColumns * sizeof(float));
+  float *dts = (float *)malloc(numOfRows * numOfColumns * sizeof(float));
+  float *O = (float *)malloc(numOfRows * numOfColumns * sizeof(float));
   Initialization(T);
-  Display(T);
-  for (int i = 0; i < 10; i++){
-    IterativeSolve(T);
-    printf("\n%i..............\n", i + 1);
-    Display(T);
+  Initialization(O);
+  // Display(T);
+  float t = 0;
+  for (int i = 0; i < 2; i++)
+  {
+    GaussIterativeSolve(T, dts);
+    t += dt;
   }
+  printf("\n\n");
+  Display(T);
+  printf("\n\n");
+  Display(dts);
 }

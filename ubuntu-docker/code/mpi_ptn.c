@@ -82,5 +82,3 @@ for (t=0;t<Ntime;t++) {
 	if (ID==0) for (  i = 0 ; i < M ; i++ ) printf("%f \n",*(T+i));
 return 0;
 }
-
-
