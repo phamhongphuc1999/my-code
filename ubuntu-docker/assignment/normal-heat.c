@@ -6,13 +6,14 @@
 #define D 0.1
 #define dt 0.01
 #define dx 0.1
+#define TOLERANCE 0.0001
 
 void Initialization(float *T) {
   for (int i = 0; i < numOfRows; i++)
   {
     for (int j = 0; j < numOfColumns; j++) {
       if (i >= (numOfRows / 2 - 5) && i < (numOfRows / 2 + 5) && j >= (numOfColumns / 2 - 5) && j < (numOfColumns / 2 + 5)) {
-        *(T + i * numOfColumns + j) = 80.0;
+        *(T + i * numOfColumns + j) = 100.0;
       } else *(T + i * numOfColumns + j) = 25.0;
     }
   }
@@ -65,21 +66,38 @@ void JacobiIterativeSolve(float *T, float *O) {
   }
 }
 
+float FindMax(float *dts) {
+  float max = 0;
+  for (int i = 0; i < numOfRows; i++) {
+    for (int j = 0; j < numOfColumns; j++) {
+      float temp = *(dts + i * numOfColumns + j);
+      if (temp < 0)
+        temp = -temp;
+      if (max < temp)
+        max = temp;
+    }
+  }
+  return max;
+}
+
 int main(int argc, char *argv[]) {
   float *T = (float *)malloc(numOfRows * numOfColumns * sizeof(float));
   float *dts = (float *)malloc(numOfRows * numOfColumns * sizeof(float));
   float *O = (float *)malloc(numOfRows * numOfColumns * sizeof(float));
   Initialization(T);
   Initialization(O);
-  // Display(T);
-  float t = 0;
-  for (int i = 0; i < 2; i++)
+  float time = 0;
+  int counter = 0;
+  float max = 100.0;
+  // for (int i = 0; i < 663; i++)
+  while (time <= 100 && max > TOLERANCE)
   {
+    counter++;
+    printf("counter: %d, max: %f, time: %f\n", counter, max, time);
     GaussIterativeSolve(T, dts);
-    t += dt;
+    time += dt;
+    max = FindMax(dts);
   }
   printf("\n\n");
   Display(T);
-  printf("\n\n");
-  Display(dts);
 }

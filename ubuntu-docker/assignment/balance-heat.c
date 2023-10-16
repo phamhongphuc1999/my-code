@@ -1,6 +1,7 @@
 #include <mpi.h>
 #include <stdio.h>
 #include <malloc.h>
+#include <stdlib.h>
 
 #define numOfRows 30
 #define numOfColumns 30
@@ -9,12 +10,23 @@
 #define dx 0.1
 #define TOLERANCE 0.0001
 
+void WriteFile(float *T, char* fileName) {
+  FILE *result = fopen(fileName, "a");
+  for (int i = 0; i < numOfRows; i++) {
+    for (int j = 0; j < numOfColumns; j++) {
+      fprintf(result, "%lf\t", *(T + i * numOfColumns + j));
+    }
+    fprintf(result, "\n");
+  }
+  fclose(result);
+}
+
 void Initialization(float *T) {
   for (int i = 0; i < numOfRows; i++)
   {
     for (int j = 0; j < numOfColumns; j++) {
       if (i >= (numOfRows / 2 - 5) && i < (numOfRows / 2 + 5) && j >= (numOfColumns / 2 - 5) && j < (numOfColumns / 2 + 5)) {
-        *(T + i * numOfColumns + j) = 80.0;
+        *(T + i * numOfColumns + j) = 100.0;
       } else *(T + i * numOfColumns + j) = 25.0;
     }
   }
@@ -62,7 +74,8 @@ void LastIterative(float *T, float *dts, float *ups, int rows) {
 }
 
 void MiddleIterative(float *T, float *dts, float *ups, float *downs, int rows) {
-  for (int i = 0; i < rows; i++) {
+  for (int i = 0; i < rows; i++)
+  {
     for (int j = 0; j < numOfColumns; j++) {
       float c = *(T + i * numOfColumns + j);
       float newUp = i == 0 ? ups[j] : *(T + (i - 1) * numOfColumns + j);
@@ -115,31 +128,28 @@ int main(int argc, char *argv[]) {
 
   float time = 0;
   int counter = 0;
-  // while (time <= 100 && cpuMax > TOLERANCE)
-  for (int i = 0; i < 2; i++)
+  MPI_Scatter(T, dataSize, MPI_FLOAT, Tc, dataSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
+  // for (int i = 0; i < 663; i++)
+  while (time <= 100 && cpuMax > TOLERANCE)
   {
     counter++;
-    MPI_Scatter(T, dataSize, MPI_FLOAT, Tc, dataSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
-
     if (IDCPU == 0) {
-      MPI_Send(Tc + (rowsPerCpu - 1) * numOfColumns, numOfColumns - 1, MPI_FLOAT, IDCPU + 1, IDCPU, MPI_COMM_WORLD);
       MPI_Recv(downs, numOfColumns, MPI_FLOAT, IDCPU + 1, IDCPU + 1, MPI_COMM_WORLD, &status);
       FirstIterative(Tc, dtsc, downs, rowsPerCpu);
+      MPI_Send(Tc + (rowsPerCpu - 1) * numOfColumns, numOfColumns, MPI_FLOAT, IDCPU + 1, IDCPU, MPI_COMM_WORLD);
     }
     else if (IDCPU < NCPU - 1) {
       MPI_Send(Tc, numOfColumns, MPI_FLOAT, IDCPU - 1, IDCPU, MPI_COMM_WORLD);
-      MPI_Send(Tc + (rowsPerCpu - 1) * numOfColumns, numOfColumns, MPI_FLOAT, IDCPU + 1, IDCPU, MPI_COMM_WORLD);
-
       MPI_Recv(ups, numOfColumns, MPI_FLOAT, IDCPU - 1, IDCPU - 1, MPI_COMM_WORLD, &status);
       MPI_Recv(downs, numOfColumns, MPI_FLOAT, IDCPU + 1, IDCPU + 1, MPI_COMM_WORLD, &status);
       MiddleIterative(Tc, dtsc, ups, downs, rowsPerCpu);
+      MPI_Send(Tc + (rowsPerCpu - 1) * numOfColumns, numOfColumns, MPI_FLOAT, IDCPU + 1, IDCPU, MPI_COMM_WORLD);
     }
     else if (IDCPU == NCPU - 1) {
       MPI_Send(Tc, numOfColumns, MPI_FLOAT, IDCPU - 1, IDCPU, MPI_COMM_WORLD);
       MPI_Recv(ups, numOfColumns, MPI_FLOAT, IDCPU - 1, IDCPU - 1, MPI_COMM_WORLD, &status);
       LastIterative(Tc, dtsc, ups, rowsPerCpu);
     }
-    MPI_Gather(Tc, dataSize, MPI_FLOAT, T + IDCPU * dataSize, dataSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Gather(dtsc, dataSize, MPI_FLOAT, dts + IDCPU * dataSize, dataSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
     if (IDCPU == 0) {
       max = FindMax(dts);
@@ -152,11 +162,11 @@ int main(int argc, char *argv[]) {
     }
     time += dt;
   }
+  MPI_Gather(Tc, dataSize, MPI_FLOAT, T + IDCPU * dataSize, dataSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
   if (IDCPU == 0) {
-    printf("final: ");
+    printf("final: \n\n");
     Display(T, numOfRows, numOfColumns);
-    printf("\n\n");
-    Display(dts, numOfRows, numOfColumns);
+    WriteFile(T, "result.txt");
   }
   MPI_Finalize();
 }
