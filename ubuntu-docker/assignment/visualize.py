@@ -4,7 +4,7 @@ import matplotlib.colors as colors
 def convert(num: str) -> float:
   return float(num)
 
-file1 = open('result_100.txt', 'r')
+file1 = open('result.txt', 'r')
 lines = file1.readlines()
 count = 0
 data = []
@@ -19,6 +19,6 @@ colors_list = ['#fff33b', '#fdc70c', '#f3903f', '#ed683c', '#e93e3a']
 cmap = colors.ListedColormap(colors_list)
 
 plt.imshow(data, cmap=cmap, vmin=0, vmax=100, extent=[0, 30, 0, 30])
-cbar = plt.colorbar(ticks=[0, 20, 40, 60, 80, 100])
-plt.title("2D Heat Map")
+plt.colorbar(ticks=[0, 20, 40, 60, 80, 100])
+# plt.title("2D Heat Map")
 plt.show()
