@@ -20,29 +20,29 @@ sudo apt -y install clang
 printf "${Green}Step 4.1: Check clang version${NC}\n"
 clang --version
 
-printf "${Green}Step 5: Install mpicc${NC}\n"
+printf "${Green}Step 5: Install g++${NC}\n"
+sudo apt -y install build-essential
+
+printf "${Green}Step 5.1: Check g++ version${NC}\n"
+g++ --version
+
+printf "${Green}Step 6: Install mpicc${NC}\n"
 sudo apt -y install mpich
 
-printf "${Green}Step 5.1: Check mpicc version${NC}\n"
+printf "${Green}Step 6.1: Check mpicc version${NC}\n"
 mpicc --version
 
-printf "${Green}Step6: Install libomp${NC}\n"
+printf "${Green}Step 7: Install libomp${NC}\n"
 sudo apt -y install libomp-dev
 
-printf "${Green}Step 7: Install vim${NC}\n"
+printf "${Green}Step 8: Install vim${NC}\n"
 sudo apt -y install vim
 
-printf "${Green}Step 7.1: Check vim version${NC}\n"
+printf "${Green}Step 8.1: Check vim version${NC}\n"
 vim --version
 
-printf "${Green}Step 7: Install git${NC}\n"
-sudo apt -y install git
-
-printf "${Green}Step 7.1: Check git version${NC}\n"
-git --version
-
-printf "${Green}Step 8: Install make${NC}\n"
+printf "${Green}Step 9: Install make${NC}\n"
 sudo apt -y install make
 
-printf "${Green}Step 8.1: Check make version${NC}\n"
+printf "${Green}Step 9.1: Check make version${NC}\n"
 make --version
