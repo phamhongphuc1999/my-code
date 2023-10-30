@@ -7,3 +7,7 @@ Source.cpp
 .fake
 *.out
 result*.txt
+
+venv/
+.idea/
+__pycache__/

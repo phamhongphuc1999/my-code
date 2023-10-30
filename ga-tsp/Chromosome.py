@@ -20,7 +20,6 @@ def create_dataset(file_name: str) -> list[Node]:
 
 def create_distance_matrix(node_list: list[Node]) -> list[list[int]]:
     result = [[0 for _ in range(20)] for _ in range(20)]
-
     for i in range(0, len(result) - 1):
         for j in range(0, len(result[0]) - 1):
             result[node_list[i].id][node_list[j].id] = math.sqrt(
@@ -36,15 +35,12 @@ matrix = create_distance_matrix(dataset)
 class Chromosome:
     def __init__(self, node_list: list[Node]):
         self.chromosome = node_list
-
         chr_representation = []
         for i in range(0, len(node_list)):
             chr_representation.append(self.chromosome[i].id)
         self.chr_representation = chr_representation
-
         distance = 0
         for j in range(1, len(self.chr_representation) - 1):
             distance += matrix[self.chr_representation[j] - 1][self.chr_representation[j + 1] - 1]
         self.cost = distance
-
         self.fitness_value = 1 / self.cost
