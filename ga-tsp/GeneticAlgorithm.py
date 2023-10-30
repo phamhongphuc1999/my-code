@@ -143,7 +143,8 @@ def crossover_mix(parent1: Chromosome, parent2: Chromosome) -> tuple[list[Node],
 
 
 def mutation(chromosome: list[Node]) -> list[Node]:
-    index1, index2 = random.sample(range(1, 19), 2)
+    _len = len(chromosome)
+    index1, index2 = random.sample(range(1, _len - 1), 2)
     chromosome[index1], chromosome[index2] = chromosome[index2], chromosome[index1]
     return chromosome
 

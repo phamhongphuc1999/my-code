@@ -19,7 +19,8 @@ def create_dataset(file_name: str) -> list[Node]:
 
 
 def create_distance_matrix(node_list: list[Node]) -> list[list[int]]:
-    result = [[0 for _ in range(20)] for _ in range(20)]
+    _len = len(node_list)
+    result = [[0 for _ in range(_len)] for _ in range(_len)]
     for i in range(0, len(result) - 1):
         for j in range(0, len(result[0]) - 1):
             result[node_list[i].id][node_list[j].id] = math.sqrt(
