@@ -1,5 +1,6 @@
 import random
 from Chromosome import Chromosome, Node
+from constant import POPULATION_SIZE, MUTATION_RATE, CROSSOVER_RATE
 
 
 def create_random_list(data: list[Node]) -> list[Node]:
@@ -20,17 +21,17 @@ def create_random_list(data: list[Node]) -> list[Node]:
     return result
 
 
-def initialization(data: list[Node], pop_size: int) -> list[Chromosome]:
+def initialization(data: list[Node], matrix: list[list[int]]) -> list[Chromosome]:
     initial_population = []
-    for i in range(0, pop_size):
+    for i in range(0, POPULATION_SIZE):
         temp = create_random_list(data)
-        new_ch = Chromosome(temp)
+        new_ch = Chromosome(temp, matrix)
         initial_population.append(new_ch)
     return initial_population
 
 
 def selection(population: list[Chromosome]) -> Chromosome:
-    _list: list[int] = random.sample(range(0, 99), 4)
+    _list: list[int] = random.sample(range(0, POPULATION_SIZE), 4)
     candidate1 = population[_list[0]]
     candidate2 = population[_list[1]]
     candidate3 = population[_list[2]]
@@ -57,7 +58,7 @@ def _is_in(item: Node, data: list[Node]) -> bool:
     return False
 
 
-def _display_node(data: list[Node]):
+def display_node(data: list[Node]):
     result = []
     for i in data:
         result.append(str(i.id))
@@ -157,22 +158,34 @@ def find_best(generation: list[Chromosome]) -> Chromosome:
     return best
 
 
-def create_new_generation(previous_generation: list[Chromosome], mutation_rate: float) -> list[Chromosome]:
+def find_two_best(generation: list[Chromosome]) -> tuple[Chromosome, Chromosome]:
+    best1 = generation[0]
+    best2 = generation[1]
+    for n in range(1, len(generation)):
+        if generation[n].cost < best1.cost:
+            best2 = best1
+            best1 = generation[n]
+    return best1, best2
+
+
+def create_new_generation(previous_generation: list[Chromosome], matrix: list[list[int]]) -> list[Chromosome]:
     new_generation = [find_best(previous_generation)]
+    # new_generation = list(find_two_best(previous_generation))
 
     for a in range(0, int(len(previous_generation) / 2)):
         parent_1 = selection(previous_generation)
         parent_2 = selection(previous_generation)
+        if random.random() < CROSSOVER_RATE:
+            child_1, child_2 = crossover_two(parent_1, parent_2)
+        else:
+            child_1 = parent_1.chromosome
+            child_2 = parent_2.chromosome
 
-        child_1, child_2 = crossover_two(parent_1, parent_2)
-        child_1 = Chromosome(child_1)
-        child_2 = Chromosome(child_2)
+        if random.random() < MUTATION_RATE:
+            child_1 = mutation(child_1)
+            child_2 = mutation(child_2)
 
-        if random.random() < mutation_rate:
-            mutated = mutation(child_1.chromosome)
-            child_1 = Chromosome(mutated)
-
-        new_generation.append(child_1)
-        new_generation.append(child_2)
+        new_generation.append(Chromosome(child_1, matrix))
+        new_generation.append(Chromosome(child_2, matrix))
 
     return new_generation
