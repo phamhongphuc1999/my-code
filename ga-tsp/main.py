@@ -59,7 +59,6 @@ def run_ten_times(file: str):
         end = time.time()
         best_solution = find_best(last_generation)
         times.append([best_solution.cost, end - start])
-    print(times)
     total = 0
     min_cost = 1000000000
     for _time in times:
@@ -84,5 +83,5 @@ def run(file: str):
 
 
 if __name__ == '__main__':
-    run_ten_times("training/oliver30")
-    # run("training/berlin52")
+    # run_ten_times("training/eil51")
+    run("training/ch150")

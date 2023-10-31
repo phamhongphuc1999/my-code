@@ -106,6 +106,29 @@ def crossover(parent1: Chromosome, parent2: Chromosome) -> tuple[list[Node], lis
     return child1, child2
 
 
+def crossover_two1(parent1: Chromosome, parent2: Chromosome) -> tuple[list[Node], list[Node]]:
+    point_1, point_2 = random.sample(range(1, len(parent1.chromosome) - 1), 2)
+    begin = min(point_1, point_2)
+    end = max(point_1, point_2)
+
+    child_1 = parent1.chromosome[begin:end + 1]
+    child_2 = parent2.chromosome[begin:end + 1]
+
+    child_1_remain = [item for item in parent2.chromosome[1:-1] if item not in child_1]
+    child_2_remain = [item for item in parent1.chromosome[1:-1] if item not in child_2]
+
+    child_1 += child_1_remain
+    child_2 += child_2_remain
+
+    child_1.insert(0, parent1.chromosome[0])
+    child_1.append(parent1.chromosome[0])
+
+    child_2.insert(0, parent2.chromosome[0])
+    child_2.append(parent2.chromosome[0])
+
+    return child_1, child_2
+
+
 def crossover_two(parent1: Chromosome, parent2: Chromosome) -> tuple[list[Node], list[Node]]:
     point1, point2 = random.sample(range(1, len(parent1.chromosome) - 1), 2)
     begin = min(point1, point2)
@@ -176,7 +199,7 @@ def create_new_generation(previous_generation: list[Chromosome], matrix: list[li
         parent_1 = selection(previous_generation)
         parent_2 = selection(previous_generation)
         if random.random() < CROSSOVER_RATE:
-            child_1, child_2 = crossover_two(parent_1, parent_2)
+            child_1, child_2 = crossover_mix(parent_1, parent_2)
         else:
             child_1 = parent_1.chromosome
             child_2 = parent_2.chromosome
