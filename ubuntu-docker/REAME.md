@@ -21,3 +21,8 @@ docker exec -it my-ubuntu bin/bash
 ```shell
 ./setup.sh
 ```
+
+## References
+
+- https://www.tecmint.com/install-oh-my-zsh-in-ubuntu/
+- https://qirolab.com/posts/install-and-setup-oh-my-zsh-on-ubuntu-system

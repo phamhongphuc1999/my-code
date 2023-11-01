@@ -41,8 +41,25 @@ sudo apt -y install vim
 printf "${Green}Step 8.1: Check vim version${NC}\n"
 vim --version
 
-printf "${Green}Step 9: Install make${NC}\n"
+printf "${Green}Step 9: Install python environment${NC}\n"
+sudo apt-get -y install python-dev python-pip python3-dev python3-pip
+
+printf "${Green}Step 10: Install neovim${NC}\n"
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo apt-get update
+sudo apt-get -y install neovim
+
+printf "${Green}Step 10.1: Check neovim version${NC}\n"
+nvim --version
+
+printf "${Green}Step 11: Install make${NC}\n"
 sudo apt -y install make
 
-printf "${Green}Step 9.1: Check make version${NC}\n"
+printf "${Green}Step 11.1: Check make version${NC}\n"
 make --version
+
+printf "${Green}Step 12: Install some useful plugins${NC}\n"
+sudo apt -y install curl wget git zsh
+
+printf "${Green}Step 13: Install oh my zsh${NC}\n"
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

@@ -84,4 +84,4 @@ def run(file: str):
 
 if __name__ == '__main__':
     # run_ten_times("training/eil51")
-    run("training/ch150")
+    run("training/att532")
