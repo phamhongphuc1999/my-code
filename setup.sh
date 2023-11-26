@@ -59,7 +59,7 @@ printf "${Green}Step 11.1: Check make version${NC}\n"
 make --version
 
 printf "${Green}Step 12: Install some useful plugins${NC}\n"
-sudo apt -y install curl wget git zsh
+sudo apt -y install curl wget git zsh nano
 
 printf "${Green}Step 13: Install oh my zsh${NC}\n"
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

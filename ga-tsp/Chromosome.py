@@ -30,10 +30,6 @@ def create_distance_matrix(node_list: list[Node]) -> list[list[int]]:
     return result
 
 
-# dataset = create_dataset("training/att532")
-# matrix = create_distance_matrix(dataset)
-
-
 class Chromosome:
     def __init__(self, node_list: list[Node], matrix: list[list[int]]):
         self.chromosome = node_list
