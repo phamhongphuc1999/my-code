@@ -11,3 +11,5 @@ result*.txt
 venv/
 .idea/
 __pycache__/
+
+minikube-darwin-amd64
