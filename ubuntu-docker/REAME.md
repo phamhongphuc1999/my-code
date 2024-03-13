@@ -21,3 +21,7 @@ docker exec -it my-ubuntu bin/bash
 ```shell
 ./setup.sh
 ```
+
+## Reference
+
+- https://www.nginx.com/blog/what-are-namespaces-cgroups-how-do-they-work/

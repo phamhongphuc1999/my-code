@@ -33,4 +33,6 @@ proof.json
 public.json
 verification_key.json
 witness.json
-/multiply_js
+
+/multiplier2_cpp
+/multiplier2_js
