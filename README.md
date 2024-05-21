@@ -4,13 +4,15 @@
 
 | Folder                            | Description                                         |
 | :-------------------------------- | :-------------------------------------------------- |
-| [jena](./jena/)                   | My jena tutorial                                    |
-| [ubuntu-docker](./ubuntu-dcoker/) | Docker ubuntu for run mpi and opnemp code           |
 | [ga-tsp](./ga-tsp/)               | Python code initialize ga for resolving tsp problem |
-| [kubernet](./kubernet/)           | Some my favorite code Ø                             |
+| [jena](./jena/)                   | My jena tutorial                                    |
+| [kubernet](./kubernet/)           | Some my favorite code                               |
+| [rust](./rust/)                   | My rust tutorial                                    |
+| [snark](./snark/)                 | My snark tutorial                                   |
+| [ubuntu-docker](./ubuntu-dcoker/) | Docker ubuntu for run mpi and opnemp code           |
 
 ## References
 
-- https://www.tecmint.com/install-oh-my-zsh-in-ubuntu/
-- https://qirolab.com/posts/install-and-setup-oh-my-zsh-on-ubuntu-system
-- https://programmingpercy.tech/blog/learn-how-to-use-neovim-as-ide/
+-   https://www.tecmint.com/install-oh-my-zsh-in-ubuntu/
+-   https://qirolab.com/posts/install-and-setup-oh-my-zsh-on-ubuntu-system
+-   https://programmingpercy.tech/blog/learn-how-to-use-neovim-as-ide/
