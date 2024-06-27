@@ -1,3 +1,14 @@
+/*https://leetcode.com/problems/two-sum/*/
+export function arrayCompare(arr1: Array<number>, arr2: Array<number>) {
+  if (arr1.length != arr2.length) return false;
+  let counter = 0;
+  for (const item of arr1) {
+    if (item != arr2[counter]) return false;
+    counter++;
+  }
+  return true;
+}
+
 export function twoSum(nums: Array<number>, target: number): Array<number> {
   const keys: { [key: number]: Array<number> } = {};
   let counter = 0;
