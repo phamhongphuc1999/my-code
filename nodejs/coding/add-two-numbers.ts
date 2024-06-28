@@ -1,3 +1,4 @@
+/*https://leetcode.com/problems/add-two-numbers/*/
 class ListNode {
   val: number;
   next: ListNode | null;
@@ -36,11 +37,11 @@ export function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNod
   let temp1: ListNode | null = l1;
   let temp2: ListNode | null = l2;
   const rootResult: ListNode = new ListNode(0, null);
-  const tempResult = rootResult;
+  let tempResult = rootResult;
   let remain = 0;
   while (temp1 != null && temp2 != null) {
     const _total = temp1.val + temp2.val + remain;
-    if (_total > 10) {
+    if (_total >= 10) {
       tempResult.val = _total - 10;
       remain = 1;
     } else {
@@ -49,11 +50,18 @@ export function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNod
     }
     temp1 = temp1.next;
     temp2 = temp2.next;
-    if (temp1 != null && temp2 != null) tempResult.next = new ListNode(0, null);
+    if (temp1 != null && temp2 != null) {
+      const _next = new ListNode(0, null);
+      tempResult.next = _next;
+      tempResult = _next;
+    }
   }
   while (temp1 != null) {
+    const _next = new ListNode(0, null);
+    tempResult.next = _next;
+    tempResult = _next;
     const _total = temp1.val + remain;
-    if (_total > 10) {
+    if (_total >= 10) {
       tempResult.val = _total - 10;
       remain = 1;
     } else {
@@ -61,11 +69,13 @@ export function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNod
       remain = 0;
     }
     temp1 = temp1.next;
-    if (temp1 != null) tempResult.next = new ListNode(0, null);
   }
   while (temp2 != null) {
+    const _next = new ListNode(0, null);
+    tempResult.next = _next;
+    tempResult = _next;
     const _total = temp2.val + remain;
-    if (_total > 10) {
+    if (_total >= 10) {
       tempResult.val = _total - 10;
       remain = 1;
     } else {
@@ -73,7 +83,7 @@ export function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNod
       remain = 0;
     }
     temp2 = temp2.next;
-    if (temp2 != null) tempResult.next = new ListNode(0, null);
   }
+  if (remain == 1) tempResult.next = new ListNode(1, null);
   return rootResult;
 }

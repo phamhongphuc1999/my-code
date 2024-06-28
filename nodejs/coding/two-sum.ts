@@ -1,14 +1,10 @@
 /*https://leetcode.com/problems/two-sum/*/
-export function arrayCompare(arr1: Array<number>, arr2: Array<number>) {
-  if (arr1.length != arr2.length) return false;
-  let counter = 0;
-  for (const item of arr1) {
-    if (item != arr2[counter]) return false;
-    counter++;
-  }
-  return true;
-}
-
+/**
+ * Solution for this problem is hash table. Using a key-value structure to storing all indexes that have same value, this way can reduce the complex when query value.
+ * @param nums
+ * @param target
+ * @returns
+ */
 export function twoSum(nums: Array<number>, target: number): Array<number> {
   const keys: { [key: number]: Array<number> } = {};
   let counter = 0;

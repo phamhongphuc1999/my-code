@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { addTwoNumbers, convertArrayToList, convertListToArray } from '../coding/add-two-numbers';
-import { arrayCompare } from '../coding/two-sum';
+import { arrayCompare } from '../utils';
 
 test('Add two numbers', () => {
   let _list = convertArrayToList([1, 2, 3, 4, 5]);
@@ -15,13 +15,13 @@ test('Add two numbers', () => {
   const result1 = convertListToArray(
     addTwoNumbers(convertArrayToList([2, 4, 3]), convertArrayToList([5, 6, 4])),
   );
-  expect(arrayCompare(result1, [7, 0, 8]));
+  expect(arrayCompare(result1, [7, 0, 8])).toBe(true);
   const result2 = convertListToArray(
     addTwoNumbers(convertArrayToList([0]), convertArrayToList([0])),
   );
-  expect(arrayCompare(result2, [0]));
+  expect(arrayCompare(result2, [0])).toBe(true);
   const result3 = convertListToArray(
     addTwoNumbers(convertArrayToList([9, 9, 9, 9, 9, 9, 9]), convertArrayToList([9, 9, 9, 9])),
   );
-  expect(arrayCompare(result3, [8, 9, 9, 9, 0, 0, 0, 1]));
+  expect(arrayCompare(result3, [8, 9, 9, 9, 0, 0, 0, 1])).toBe(true);
 });
