@@ -1,3 +1,13 @@
-FROM node:7
-ADD app.js ./app.js
-ENTRYPOINT ["node", "app.js"]
+FROM node:14
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD [ "node", "app.mjs" ]

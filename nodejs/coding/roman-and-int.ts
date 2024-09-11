@@ -8,14 +8,11 @@ const romanToIntMapping: { [roman: string]: number } = {
   M: 1000,
 };
 
-const intToRomanMapping: { [int: number]: string } = {
-  1: 'I',
-  5: 'V',
-  10: 'X',
-  50: 'L',
-  100: 'C',
-  500: 'D',
-  1000: 'M',
+const intToRomanMapping: { [position: number]: { [int: number]: string } } = {
+  0: { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX' },
+  1: { 1: 'X', 2: 'XX', 3: 'XXX', 4: 'XL', 5: 'L', 6: 'LX', 7: 'LXX', 8: 'LXXX', 9: 'XC' },
+  2: { 1: 'C', 2: 'CC', 3: 'CCC', 4: 'CD', 5: 'D', 6: 'DC', 7: 'DCC', 8: 'DCCC', 9: 'CM' },
+  3: { 1: 'M', 2: 'MM', 3: 'MMM' },
 };
 
 /*https://leetcode.com/problems/roman-to-integer/*/
@@ -46,12 +43,12 @@ export function analysisNumber(num: number): Array<number> {
   return result;
 }
 
-// export function intToRoman(num: number): string {
-//   const _arr = analysisNumber(num).slice(0, 3);
-//   const _len = _arr.length;
-//   let result = '';
-//   for (let i = _len - 1; i >= 0; i--) {
-//     const element = _arr[i];
-
-//   }
-// }
+export function intToRoman(num: number): string {
+  const _arr = analysisNumber(num).slice(0, 4);
+  let result = '';
+  _arr.forEach((item, index) => {
+    const _int = intToRomanMapping[index][item];
+    if (_int) result = `${_int}${result}`;
+  });
+  return result;
+}
