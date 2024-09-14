@@ -1,12 +1,12 @@
 /*https://leetcode.com/problems/palindrome-number/*/
 export function isPalindrome(x: number): boolean {
-  if (x < 0) return false;
-  let temp = 0;
-  let xTemp = x;
-  while (xTemp > 0) {
-    const remain = xTemp % 10;
-    xTemp = Math.floor(xTemp / 10);
-    temp = temp * 10 + remain;
+  const sX = x.toString();
+  let start = 0;
+  let end = sX.length - 1;
+  while (start <= end) {
+    if (sX[start] != sX[end]) return false;
+    start++;
+    end--;
   }
-  return temp == x;
+  return true;
 }
