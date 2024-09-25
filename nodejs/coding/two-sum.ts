@@ -22,3 +22,17 @@ export function twoSum(nums: Array<number>, target: number): Array<number> {
   }
   return [-1, -1];
 }
+
+/*https://leetcode.com/problems/reverse-integer/*/
+export function reverse(x: number): number {
+  const isPositive = x >= 0;
+  let result = 0;
+  let base = Math.abs(x);
+  while (base > 0) {
+    const remain = base % 10;
+    result = result * 10 + remain;
+    base = Math.floor(base / 10);
+  }
+  if (result > 2147483647 || result < 0) return 0;
+  return isPositive ? result : -result;
+}

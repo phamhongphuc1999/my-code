@@ -87,3 +87,32 @@ export function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNod
   if (remain == 1) tempResult.next = new ListNode(1, null);
   return rootResult;
 }
+
+/*https://leetcode.com/problems/merge-two-sorted-lists/*/
+export function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode | null {
+  if (list1 == null && list2 == null) return null;
+  else if (list1 == null && list2 != null) return list2;
+  else if (list1 != null && list2 == null) return list1;
+  const result: ListNode = new ListNode(0, null);
+  let temp = result;
+  let node1 = list1;
+  let node2 = list2;
+  while (node1 != null && node2 != null) {
+    const val1 = node1.val;
+    const val2 = node2.val;
+    if (val1 > val2) {
+      temp.val = val2;
+      node2 = node2.next;
+    } else {
+      temp.val = val1;
+      node1 = node1.next;
+    }
+    if (node1 != null && node2 != null) {
+      temp.next = new ListNode(0, null);
+      temp = temp.next;
+    }
+  }
+  if (node1 != null) temp.next = node1;
+  else if (node2 != null) temp.next = node2;
+  return result;
+}

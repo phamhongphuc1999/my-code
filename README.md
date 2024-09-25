@@ -4,6 +4,7 @@
 
 | Folder                            | Description                                         |
 | :-------------------------------- | :-------------------------------------------------- |
+| [c language](./c-language/)       | C and C++ program                                   |
 | [ga-tsp](./ga-tsp/)               | Python code initialize ga for resolving tsp problem |
 | [jena](./jena/)                   | My jena tutorial                                    |
 | [kubernet](./kubernet/)           | Some my favorite code                               |

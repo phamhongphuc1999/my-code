@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+import { convertArrayToList, convertListToArray, mergeTwoLists } from '../coding/add-two-numbers';
 import {
   findSubstring,
   findTail,
@@ -8,7 +9,7 @@ import {
 import { analytic, compare, minWindow } from '../coding/minimum-window-sliding';
 import { isPalindrome } from '../coding/palindrome-number';
 import { analysisNumber, intToRoman, romanToInt } from '../coding/roman-and-int';
-import { twoSum } from '../coding/two-sum';
+import { reverse, twoSum } from '../coding/two-sum';
 import { isValidSudoku } from '../coding/valid-sudoku';
 import { arrayCompare } from '../utils';
 
@@ -112,4 +113,24 @@ test('Longest common substring', function () {
 test('Substring with concatenation of all words', function () {
   expect(arrayCompare(slideIndices('abababab', 'ab'), [0, 2, 4, 6]));
   expect(arrayCompare(slideIndices('abccad123abc4abc', 'abc'), [0, 9, 13]));
+});
+
+test('Merge sorted arrays', () => {
+  const result2 = convertListToArray(
+    mergeTwoLists(convertArrayToList([]), convertArrayToList([0])),
+  );
+  expect(arrayCompare(result2, [0])).toBe(true);
+});
+
+test('reverse integer', () => {
+  const result1 = reverse(123);
+  expect(result1 == 321).toBe(true);
+  const result2 = reverse(-123);
+  expect(result2 == -321).toBe(true);
+  const result3 = reverse(120);
+  expect(result3 == 21).toBe(true);
+  const result4 = reverse(2147483647);
+  expect(result4 == 0).toBe(true);
+  const result5 = reverse(-1147483647);
+  expect(result5 == 0).toBe(true);
 });
