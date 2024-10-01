@@ -69,18 +69,40 @@ vector<vector<int>> construct2DArray(vector<int> &original, int m, int n)
   return result;
 }
 
+/*https://leetcode.com/problems/remove-digit-from-number-to-maximize-result/description/*/
+string removeDigit(string number, char digit)
+{
+  int len = number.length();
+  string result = "";
+  for (int i = 0; i < len; i++)
+  {
+    if (number[i] == digit)
+    {
+      string temp = number.substr(0, i) + number.substr(i + 1);
+      if (result == "")
+        result = temp;
+      else
+      {
+        int counter = 0;
+        while (counter < len - 1)
+        {
+          if (result[counter] > temp[counter])
+            break;
+          else if (result[counter] < temp[counter])
+          {
+            result = temp;
+            break;
+          }
+          counter++;
+        }
+      }
+    }
+  }
+  return result;
+}
+
 int main()
 {
-  vector<int> vect1{3};
-  vector<vector<int>> result = construct2DArray(vect1, 1, 2);
-  for (vector<int> list : result)
-  {
-    for (int item : list)
-    {
-      cout << item << " ";
-    }
-    cout << endl;
-  }
-  cout << endl;
+  cout << removeDigit("551", '5') << endl;
   return 0;
 }
