@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -101,8 +102,85 @@ string removeDigit(string number, char digit)
   return result;
 }
 
+/*https://leetcode.com/problems/rank-transform-of-an-array/?envType=daily-question&envId=2024-10-02*/
+vector<int> arrayRankTransform(vector<int> &arr)
+{
+  vector<int> result;
+  if (arr.size() == 0)
+    return result;
+  vector<int> copiedArr = arr;
+  sort(copiedArr.begin(), copiedArr.end());
+  map<int, int> hash;
+  int counter = 1;
+  int preValue = copiedArr[0];
+  for (int i : copiedArr)
+  {
+    if (i > preValue)
+      counter++;
+    hash.insert({i, counter});
+    preValue = i;
+  }
+  for (int i : arr)
+  {
+    result.push_back(hash[i]);
+  }
+  return result;
+}
+
+/*https://leetcode.com/problems/permutation-in-string/description/?envType=daily-question&envId=2024-10-05*/
+bool checkInclusion(string s1, string s2)
+{
+  int len1 = s1.length();
+  int len2 = s2.length();
+  if (len1 > len2)
+    return false;
+  int counter = 0;
+  int s1Array[26]{0};
+  for (char s : s1)
+  {
+    s1Array[s - 'a'] += 1;
+  }
+  int s2Array[26]{0};
+  for (int i = 0; i < 26; i++)
+  {
+    if (s2Array[i] == s1Array[i])
+      counter++;
+  }
+  for (int i = 0; i < len1; i++)
+  {
+    int value = s2[i] - 'a';
+    if (s2Array[value] == s1Array[value])
+      counter--;
+    s2Array[value] += 1;
+    if (s2Array[value] == s1Array[value])
+      counter++;
+  }
+  if (counter == 26)
+    return true;
+  for (int i = len1; i < len2; i++)
+  {
+    int remove = s2[i - len1] - 'a';
+    int add = s2[i] - 'a';
+    if (s2Array[remove] == s1Array[remove])
+      counter--;
+    s2Array[remove] -= 1;
+    if (s2Array[remove] == s1Array[remove])
+      counter++;
+
+    if (s2Array[add] == s1Array[add])
+      counter--;
+    s2Array[add] += 1;
+    if (s2Array[add] == s1Array[add])
+      counter++;
+    if (counter == 26)
+      return true;
+  }
+  return false;
+}
+
 int main()
 {
-  cout << removeDigit("551", '5') << endl;
+  cout << checkInclusion("ab", "eidboaoo") << endl;
+  cout << endl;
   return 0;
 }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -31,9 +32,35 @@ int chalkReplacer(vector<int> &chalk, int k)
   return begin - 1;
 }
 
+/*https://leetcode.com/problems/sentence-similarity-iii/description/?envType=daily-question&envId=2024-10-06*/
+bool areSentencesSimilar(string sentence1, string sentence2)
+{
+  stringstream ss1(sentence1), ss2(sentence2);
+  string word;
+  vector<string> vec1, vec2;
+  while (ss1 >> word)
+    vec1.push_back(word);
+  while (ss2 >> word)
+    vec2.push_back(word);
+  if (vec1.size() > vec2.size())
+    return areSentencesSimilar(sentence2, sentence1);
+  int start = 0;
+  int end1 = vec1.size() - 1;
+  int end2 = vec2.size() - 1;
+  while (start < vec1.size() && vec1[start] == vec2[start])
+  {
+    start++;
+  }
+  while (end1 >= 0 && end2 >= 0 && vec1[end1] == vec2[end2])
+  {
+    end1--;
+    end2--;
+  }
+  return start >= end1 + 1;
+}
+
 int main()
 {
-  vector<int> vect1{3, 4, 1, 2};
-  int result = chalkReplacer(vect1, 30);
-  cout << result << endl;
+  bool check = areSentencesSimilar("My name is Haley", "My Haley");
+  cout << check << endl;
 }

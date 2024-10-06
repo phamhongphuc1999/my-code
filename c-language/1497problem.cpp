@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -27,9 +28,25 @@ bool canArrange(vector<int> &arr, int k)
   return true;
 }
 
+/*https://leetcode.com/problems/divide-players-into-teams-of-equal-skill/?envType=daily-question&envId=2024-10-04*/
+long long dividePlayers(vector<int> &skill)
+{
+  sort(skill.begin(), skill.end());
+  int len = skill.size();
+  int check = skill[0] + skill[len - 1];
+  long long result = skill[0] * skill[len - 1];
+  for (int i = 1; i < len / 2; i++)
+  {
+    if (skill[i] + skill[len - 1 - i] != check)
+      return -1;
+    result += skill[i] * skill[len - 1 - i];
+  }
+  return result;
+}
+
 int main()
 {
-  vector<int> vec1{-1, -1, -1, -1, 2, 2, -2, -2};
-  cout << canArrange(vec1, 3) << endl;
+  vector<int> vec1{1, 1, 2, 3};
+  cout << dividePlayers(vec1) << endl;
   return 0;
 }
