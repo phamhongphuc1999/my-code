@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <bits/stdc++.h>
+#include <stack>
 
 using namespace std;
 
@@ -178,9 +179,154 @@ bool checkInclusion(string s1, string s2)
   return false;
 }
 
+/*https://leetcode.com/problems/divide-two-integers/description/*/
+long long divide(long long dividend, long long divisor)
+{
+  if (dividend == INT_MIN && divisor == -1)
+    return INT_MAX;
+  int sign = ((dividend < 0) ^ (divisor < 0)) ? -1 : 1;
+
+  dividend = abs(dividend);
+  divisor = abs(divisor);
+  long long quotient = 0;
+  for (int i = 31; i >= 0; --i)
+  {
+    if ((divisor << i) <= dividend)
+    {
+      dividend -= (divisor << i);
+      quotient |= (1LL << i);
+    }
+  }
+  return sign * quotient;
+}
+
+int searchFirstRange(vector<int> &nums, int target)
+{
+  int start = 0;
+  int end = nums.size() - 1;
+  while (start < end)
+  {
+    if (start == end - 1)
+    {
+      if (nums[start] == target)
+        return start;
+      else if (nums[end] == target)
+        return end;
+      else
+        return -1;
+    }
+    int mid = (start + end) / 2;
+    if (nums[mid] < target)
+      start = mid + 1;
+    else if (nums[mid] > target)
+      end = mid - 1;
+    else
+      end = mid;
+  }
+  return nums[start] == target ? start : -1;
+}
+
+int searchLatestRange(vector<int> &nums, int target)
+{
+  int start = 0;
+  int end = nums.size() - 1;
+  while (start < end)
+  {
+    if (start == end - 1)
+    {
+      if (nums[end] == target)
+        return end;
+      else if (nums[start] == target)
+        return start;
+      else
+        return -1;
+    }
+    int mid = (start + end) / 2;
+    if (nums[mid] < target)
+      start = mid + 1;
+    else if (nums[mid] > target)
+      end = mid - 1;
+    else
+      start = mid;
+  }
+  return nums[end] == target ? end : -1;
+}
+
+/*https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/*/
+vector<int> searchRange(vector<int> &nums, int target)
+{
+  if (nums.size() == 0)
+    return vector<int>{-1, -1};
+  int firstIndex = searchFirstRange(nums, target);
+  int latestIndex = searchLatestRange(nums, target);
+  return vector<int>{firstIndex, latestIndex};
+}
+
+/*https://leetcode.com/problems/minimum-string-length-after-removing-substrings/description/?envType=daily-question&envId=2024-10-07*/
+int minLength(string s)
+{
+  int len = s.length();
+  if (len <= 1)
+    return len;
+  stack<char> save;
+  for (int i = 0; i < len; i++)
+  {
+    if (save.size() == 0)
+      save.push(s[i]);
+    else
+    {
+      char top = save.top();
+      if (s[i] == 'B' && top == 'A')
+        save.pop();
+      else if (s[i] == 'D' && top == 'C')
+        save.pop();
+      else
+        save.push(s[i]);
+    }
+  }
+  return save.size();
+}
+
+/*https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced/editorial/?envType=daily-question&envId=2024-10-08*/
+int minSwaps(string s)
+{
+  int stackSize = 0;
+  int n = s.size();
+
+  for (int i = 0; i < n; i++)
+  {
+    char ch = s[i];
+    if (ch == '[')
+      stackSize++;
+    else
+    {
+      if (stackSize > 0)
+        stackSize--;
+    }
+  }
+  return (stackSize + 1) / 2;
+}
+
+/*https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/description/?envType=daily-question&envId=2024-10-09*/
+int minAddToMakeValid(string s)
+{
+  int counter = 1;
+  int len = s.length();
+  char c[len];
+  c[0] = s[0];
+  for (int i = 1; i < len; i++)
+  {
+    if (counter > 0 && c[counter - 1] == '(' && s[i] == ')')
+      counter--;
+    else
+      c[counter++] = s[i];
+  }
+  return counter;
+}
+
 int main()
 {
-  cout << checkInclusion("ab", "eidboaoo") << endl;
-  cout << endl;
+  int size = minAddToMakeValid("())");
+  cout << size << endl;
   return 0;
 }
