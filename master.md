@@ -1,3 +1,20 @@
+```
+Methodology
+
+- Account abstraction review -> what is AA, why should use AA.
+
+
+
+3.1 -> why aa important, use AA?
+3.2 what is aa().
+3.3 What is recovery solution.
+3.4 The combination between AA and recovery solution => recovery AA.
+
+- 3 account abstraction wallet and recovery solutions ==> several recovery solutions -> my recovery mechanism.
+- 6 merge to chapter 7
+- 4 and 5 -> one chapter -> Design and implementation
+```
+
 ### 3.1. Motivation for Account Abstraction
 
 #### 3.1.1. Why is there a need for account abstraction?
