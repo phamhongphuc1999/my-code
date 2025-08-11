@@ -1,9 +1,26 @@
 "use client";
 
+import { encrypt_block, decrypt_block, initSync } from "../../public/pkg/aes";
 import { globalQuery } from "@/utils/api.utils";
 import { decode, decryptText } from "@/utils/encrypt.util";
 
 export default function Home() {
+    async function initWasm() {
+        fetch("pkg/aes_bg.wasm")
+            .then((res) => res.arrayBuffer())
+            .then((bytes) => {
+                initSync(bytes);
+                const text = "Hello, AES in Rust";
+                const padded = new TextEncoder().encode(text.padEnd(16, "\0")); // pad to 16 bytes
+
+                const encrypted = encrypt_block(padded);
+                console.log("Encrypted:", encrypted);
+
+                const decrypted = decrypt_block(encrypted);
+                console.log("Decrypted:", new TextDecoder().decode(decrypted));
+            });
+    }
+
     async function getNextJson() {
         const res = await fetch("/api/json");
         const stringJson = await res.json();
@@ -43,6 +60,9 @@ export default function Home() {
             </button>
             <button className="border" onClick={getNextJson}>
                 get next json
+            </button>
+            <button className="border" onClick={initWasm}>
+                wasm
             </button>
         </div>
     );
