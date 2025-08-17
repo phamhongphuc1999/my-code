@@ -6,6 +6,10 @@ RESET = $(shell tput -Txterm sgr0)
 GRAY = $(shell tput -Txterm setaf 6)
 TARGET_MAX_CHAR_NUM = 20
 
+## Build to web assembly.
+build:
+	wasm-pack build --target web --out-dir pkg --release
+
 ## Shows help. | Help
 help:
 	@echo ''

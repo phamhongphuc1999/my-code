@@ -1,33 +1,63 @@
 use wasm_bindgen::prelude::*;
-use aes::Aes128;
+use aes::Aes256;
+use cbc::{Encryptor, Decryptor};
 use cipher::{
-    BlockEncrypt, BlockDecrypt, KeyInit,
-    generic_array::GenericArray,
+    block_padding::Pkcs7, BlockEncryptMut, BlockDecryptMut, KeyIvInit,
 };
+use sha2::{Sha256, Digest};
+use base64::{engine::general_purpose, Engine as _};
 
-#[wasm_bindgen]
-pub fn encrypt_block(input: &[u8]) -> Vec<u8> {
-    // AES-128 key (16 bytes)
-    let key = GenericArray::from_slice(b"examplekey123456");
-
-    // IV (initialization vector) for AES in ECB here (block cipher demo)
-    // In real usage, you should use AES-GCM or CBC with random IV.
-    let cipher = Aes128::new(&key);
-
-    // Ensure input is exactly 16 bytes for a single block
-    let mut block = GenericArray::clone_from_slice(&input[0..16]);
-    cipher.encrypt_block(&mut block);
-
-    block.to_vec()
+fn derive_key(key: &str) -> [u8; 32] {
+    let mut hasher = Sha256::new();
+    hasher.update(key.as_bytes());
+    let result = hasher.finalize();
+    let mut key_bytes = [0u8; 32];
+    key_bytes.copy_from_slice(&result);
+    key_bytes
 }
 
 #[wasm_bindgen]
-pub fn decrypt_block(input: &[u8]) -> Vec<u8> {
-    let key = GenericArray::from_slice(b"examplekey123456");
-    let cipher = Aes128::new(&key);
+pub fn encrypt(key: &str, iv: &[u8], plain: &str) -> String {
+    let key = derive_key(key);
 
-    let mut block = GenericArray::clone_from_slice(&input[0..16]);
-    cipher.decrypt_block(&mut block);
+    let mut buf = plain.as_bytes().to_vec();
+    // add capacity for padding up to next multiple of block size
+    let bs = 16;
+    let pad_len = bs - (buf.len() % bs);
+    buf.extend(std::iter::repeat(0u8).take(pad_len));
 
-    block.to_vec()
+    let cipher = Encryptor::<Aes256>::new(&key.into(), iv.into());
+    let pos = plain.len();
+    let ciphertext = cipher.encrypt_padded_mut::<Pkcs7>(&mut buf, pos).unwrap();
+
+    general_purpose::STANDARD.encode(ciphertext)
+}
+
+#[wasm_bindgen]
+pub fn decrypt(key: &str, iv: &[u8], cipher_b64: &str) -> String {
+    let key = derive_key(key);
+
+    let mut buf = general_purpose::STANDARD.decode(cipher_b64).unwrap();
+    let cipher = Decryptor::<Aes256>::new(&key.into(), iv.into());
+    let decrypted = cipher.decrypt_padded_mut::<Pkcs7>(&mut buf).unwrap();
+
+    String::from_utf8(decrypted.to_vec()).unwrap()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_encrypt_decrypt() {
+        let key = "my secret key not 32 bytes"; // flexible size
+        let iv = [0u8; 16];
+        let msg = "Hello, AES flexible size key!";
+
+        let enc = encrypt(key, &iv, msg);
+        println!("cipher: {}", enc);
+
+        let dec = decrypt(key, &iv, &enc);
+        assert_eq!(msg, dec);
+    }
 }

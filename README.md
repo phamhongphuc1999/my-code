@@ -2,15 +2,14 @@
 
 ## Structure
 
-| Folder                                                       | Description                                         |
-| :----------------------------------------------------------- | :-------------------------------------------------- |
-| [c language](./c-language/)                                  | C and C++ program                                   |
-| [ga-tsp](./ga-tsp/)                                          | Python code initialize ga for resolving tsp problem |
-| [jena](./jena/)                                              | My jena tutorial                                    |
-| [nodejs](./nodejs/)                                          | Coding                                              |
-| [rust-container](./rust-container/)                          | My rust code                                        |
-| [ubuntu-docker](./ubuntu-dcoker/)                            | Docker ubuntu for run mpi and opnemp code           |
-| [encrypt-app](./encrypt-app/), [encrypt-api](./encrypt-api/) | Experience hide and encrypt mechanisms              |
+| Folder                              | Description                                         |
+| :---------------------------------- | :-------------------------------------------------- |
+| [c language](./c-language/)         | C and C++ program                                   |
+| [ga-tsp](./ga-tsp/)                 | Python code initialize ga for resolving tsp problem |
+| [jena](./jena/)                     | My jena tutorial                                    |
+| [nodejs](./nodejs/)                 | Coding                                              |
+| [rust-container](./rust-container/) | My rust code                                        |
+| [ubuntu-docker](./ubuntu-dcoker/)   | Docker ubuntu for run mpi and opnemp code           |
 
 ## References
 
