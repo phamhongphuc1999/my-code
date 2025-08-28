@@ -7,6 +7,15 @@ use cipher::{
 use sha2::{Sha256, Digest};
 use base64::{engine::general_purpose, Engine as _};
 
+mod domain;
+
+pub use domain::*;
+
+#[wasm_bindgen(start)]
+pub fn main_js() {
+    console_error_panic_hook::set_once();
+}
+
 fn derive_key(key: &str) -> [u8; 32] {
     let mut hasher = Sha256::new();
     hasher.update(key.as_bytes());
@@ -18,6 +27,11 @@ fn derive_key(key: &str) -> [u8; 32] {
 
 #[wasm_bindgen]
 pub fn encrypt(key: &str, iv: &[u8], plain: &str) -> String {
+    let _domain_array = ["localhost:3011", "experiment.peter-present.xyz"];
+    let _host = get_host();
+    if !_domain_array.contains(&_host.as_str()) {
+        panic!("Something went wrong");
+    }
     let key = derive_key(key);
 
     let mut buf = plain.as_bytes().to_vec();
@@ -35,6 +49,11 @@ pub fn encrypt(key: &str, iv: &[u8], plain: &str) -> String {
 
 #[wasm_bindgen]
 pub fn decrypt(key: &str, iv: &[u8], cipher_b64: &str) -> String {
+    let _domain_array = ["localhost:3011", "experiment.peter-present.xyz"];
+    let _host = get_host();
+    if !_domain_array.contains(&_host.as_str()) {
+        panic!("Something went wrong");
+    }
     let key = derive_key(key);
 
     let mut buf = general_purpose::STANDARD.decode(cipher_b64).unwrap();

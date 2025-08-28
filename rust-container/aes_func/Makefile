@@ -10,6 +10,10 @@ TARGET_MAX_CHAR_NUM = 20
 build:
 	wasm-pack build --target web --out-dir pkg --release
 
+## Revert web assembly to c language.
+revert:
+	wasm-decompile pkg/crypt_bg.wasm -o pkg/output.c
+
 ## Shows help. | Help
 help:
 	@echo ''
