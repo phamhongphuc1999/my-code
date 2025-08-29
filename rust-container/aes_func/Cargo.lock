@@ -96,6 +96,7 @@ dependencies = [
  "cbc",
  "cipher",
  "console_error_panic_hook",
+ "obfstr",
  "sha2",
  "wasm-bindgen",
  "web-sys",
@@ -162,6 +163,12 @@ name = "log"
 version = "0.4.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
+
+[[package]]
+name = "obfstr"
+version = "0.4.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d0d354e9a302760d07e025701d40534f17dd1fe4c4db955b4e3bd2907c63bdee"
 
 [[package]]
 name = "once_cell"

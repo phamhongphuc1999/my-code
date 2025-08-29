@@ -6,6 +6,7 @@ use cipher::{
 };
 use sha2::{Sha256, Digest};
 use base64::{engine::general_purpose, Engine as _};
+use obfstr::obfstr;
 
 mod domain;
 
@@ -25,13 +26,15 @@ fn derive_key(key: &str) -> [u8; 32] {
     key_bytes
 }
 
-#[wasm_bindgen]
-pub fn encrypt(key: &str, iv: &[u8], plain: &str) -> String {
-    let _domain_array = ["localhost:3011", "experiment.peter-present.xyz"];
+fn check_domain() {
     let _host = get_host();
-    if !_domain_array.contains(&_host.as_str()) {
-        panic!("Something went wrong");
+    if _host != obfstr!("localhost:3011") && _host != obfstr!("experiment.peter-present.xyz") {
+        panic!("{}", obfstr!("Something went wrong"));
     }
+}
+
+fn _encrypt(key: &str, iv: &[u8], plain: &str) -> String {
+    check_domain();
     let key = derive_key(key);
 
     let mut buf = plain.as_bytes().to_vec();
@@ -48,12 +51,12 @@ pub fn encrypt(key: &str, iv: &[u8], plain: &str) -> String {
 }
 
 #[wasm_bindgen]
-pub fn decrypt(key: &str, iv: &[u8], cipher_b64: &str) -> String {
-    let _domain_array = ["localhost:3011", "experiment.peter-present.xyz"];
-    let _host = get_host();
-    if !_domain_array.contains(&_host.as_str()) {
-        panic!("Something went wrong");
-    }
+pub fn encrypt(key: &str, iv: &[u8], plain: &str) -> String {
+    _encrypt(key, iv, plain)
+}
+
+fn _decrypt(key: &str, iv: &[u8], cipher_b64: &str) -> String {
+    check_domain();
     let key = derive_key(key);
 
     let mut buf = general_purpose::STANDARD.decode(cipher_b64).unwrap();
@@ -64,9 +67,19 @@ pub fn decrypt(key: &str, iv: &[u8], cipher_b64: &str) -> String {
 }
 
 #[wasm_bindgen]
-pub fn create_key(key: &str, iv: &[u8], timestamp: &str, uuid: &str) -> String {
+pub fn decrypt(key: &str, iv: &[u8], cipher_b64: &str) -> String {
+    _decrypt(key, iv, cipher_b64)
+}
+
+fn _create_key(key: &str, iv: &[u8], timestamp: &str, uuid: &str) -> String {
+    check_domain();
     let raw_result = format!("{}---{}", timestamp, uuid);
     encrypt(key, iv, &raw_result)
+}
+
+#[wasm_bindgen]
+pub fn create_key(key: &str, iv: &[u8], timestamp: &str, uuid: &str) -> String {
+    _create_key(key, iv, timestamp, uuid)
 }
 
 #[cfg(test)]

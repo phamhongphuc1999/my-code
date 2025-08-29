@@ -15,3 +15,4 @@ sha2 = "0.10"
 base64 = "0.22"
 web-sys = { version = "0.3", features = ["Window", "Location"] }
 console_error_panic_hook = "0.1"
+obfstr = "0.4"
