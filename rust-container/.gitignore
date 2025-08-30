@@ -1,4 +1,5 @@
 **/target
-/aes_func/pkg
-/aes_func/binaryen-version_117
-/aes_func/*.tar.gz
+**/pkg
+**/binaryen-version_117
+**/*.tar.gz
+private_crypt/

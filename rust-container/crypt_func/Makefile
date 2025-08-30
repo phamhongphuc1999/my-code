@@ -14,7 +14,19 @@ build:
 
 ## Revert web assembly to c language.
 revert:
-	wasm-decompile pkg/crypt_bg.wasm -o pkg/output.c
+	wasm-decompile pkg/crypt_bg.final.wasm -o pkg/crypt.c
+
+## Revert web assembly to c language by using wasm2c.
+wasm2c:
+	wasm2c pkg/crypt_bg.final.wasm -o pkg/crypt1.c
+
+## Revert web assembly to wat.
+wat:
+	wasm2wat pkg/crypt_bg.final.wasm -o pkg/crypt.wat
+
+## Revert web assembly to wat by using wasm-dis.
+dis:
+	wasm-dis pkg/crypt_bg.final.wasm -o pkg/crypt.dis.wat
 
 ## Shows help. | Help
 help:
