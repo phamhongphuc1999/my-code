@@ -68,7 +68,7 @@ pub fn encrypt(timestamp: &str, uuid: &str, iv: &[u8], plain: &str) -> String {
     _encrypt(&key, iv, plain)
 }
 
-fn _decrypt(key: &str, iv: &[u8], cipher_text: &str) -> String {
+fn _decrypt(key: &str, iv: &[u8], cipher_text: &str) -> Vec<u8> {
     check_domain();
     let key = derive_key(key);
 
@@ -76,11 +76,11 @@ fn _decrypt(key: &str, iv: &[u8], cipher_text: &str) -> String {
     let cipher = Decryptor::<Aes256>::new(&key.into(), iv.into());
     let decrypted = cipher.decrypt_padded_mut::<Pkcs7>(&mut buf).unwrap();
 
-    String::from_utf8(decrypted.to_vec()).unwrap()
+    decrypted.to_vec()
 }
 
 #[wasm_bindgen]
-pub fn decrypt(timestamp: &str, uuid: &str, iv: &[u8], cipher_b64: &str) -> String {
+pub fn decrypt(timestamp: &str, uuid: &str, iv: &[u8], cipher_b64: &str) -> Vec<u8> {
     let key = create_key(obfstr!("uXL5CwvBW3eZnWQX6uq5dcAT9wj0ZCMGv-onUe4zUfk"), &HEX_IV, timestamp, uuid);
     _decrypt(&key, iv, cipher_b64)
 }
