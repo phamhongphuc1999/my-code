@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -20,6 +21,15 @@ export class UsersService {
     const user = await this.repo.findOneBy({ id });
     if (!user) throw new NotFoundException('User not found');
     return user;
+  }
+
+  async findByUsername(username: string) {
+    return this.repo.findOneBy({ username });
+  }
+
+  async validatePassword(password: string, hash: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    return await bcrypt.compare(password, hash);
   }
 
   create(dto: CreateUserDto) {

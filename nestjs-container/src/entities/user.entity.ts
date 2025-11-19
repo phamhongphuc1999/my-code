@@ -1,12 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('Employees')
+@Entity('Users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   username: string;
+
+  @Column()
+  password: string;
 
   @Column()
   email: string;
