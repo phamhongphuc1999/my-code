@@ -1,3 +1,4 @@
+import { BullModule } from '@nestjs/bullmq';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -5,9 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware } from 'src/middlewares/logger.middleware';
 import { AppController } from '../controllers/app.controller';
 import { AppService } from '../services/app.service';
-import { ProductionModule } from './production.module';
-import { UsersModule } from './users.module';
 import { AuthModule } from './auth.module';
+import { ProductionModule } from './production.module';
+import { QueueModule } from './queue.module';
+import { UsersModule } from './users.module';
 
 @Module({
   imports: [
@@ -27,9 +29,16 @@ import { AuthModule } from './auth.module';
       autoLoadEntities: true,
       synchronize: false,
     }),
+    BullModule.forRoot({
+      connection: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
     UsersModule,
     ProductionModule,
     AuthModule,
+    QueueModule,
   ],
   controllers: [AppController],
   providers: [AppService],

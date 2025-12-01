@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  redis:
+    image: redis:7.2
+    container_name: redis_server
+    restart: always
+    ports:
+      - '6379:6379'
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --save 60 1
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
