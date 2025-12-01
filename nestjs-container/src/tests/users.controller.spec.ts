@@ -40,15 +40,9 @@ describe('UsersController', () => {
   let controller: UsersController;
 
   beforeEach(async () => {
-    // 1. Create the testing module, replacing the real UsersService with the mock
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [
-        {
-          provide: UsersService,
-          useValue: mockUsersService, // Use our mock object
-        },
-      ],
+      providers: [{ provide: UsersService, useValue: mockUsersService }],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
