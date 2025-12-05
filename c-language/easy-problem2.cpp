@@ -81,9 +81,28 @@ bool canThreePartsEqualSum(vector<int> &arr)
   return finalRound == 0 && okCounter == 2 && isFinalRound;
 }
 
+// 3432. Count Partitions with Even Sum Difference
+int countPartitions(vector<int> &nums)
+{
+  int total = 0;
+  for (int item : nums)
+  {
+    total += item;
+  }
+  int firstTotal = 0;
+  int result = 0;
+  for (int i = 0; i < nums.size() - 1; i++)
+  {
+    firstTotal += nums.at(i);
+    if ((2 * firstTotal - total) % 2 == 0)
+      result++;
+  }
+  return result;
+}
+
 int main()
 {
-  vector<int> abc{1, -1, 1, -1};
-  bool result = canThreePartsEqualSum(abc);
+  vector<int> abc{1, 2, 2};
+  bool result = countPartitions(abc);
   cout << result << endl;
 }
