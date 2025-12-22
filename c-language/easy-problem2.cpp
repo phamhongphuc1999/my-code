@@ -2,6 +2,7 @@
 #include <vector>
 #include <bits/stdc++.h>
 #include <stack>
+#include <string>
 
 using namespace std;
 
@@ -100,9 +101,55 @@ int countPartitions(vector<int> &nums)
   return result;
 }
 
+string phoneNumbers[8] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+struct Node
+{
+  string arr;
+  int prevIndex;
+};
+
+// 17. Letter Combinations of a Phone Number
+vector<string> letterCombinations(string digits)
+{
+  vector<string> result;
+  stack<Node> st;
+  int index = digits[0] - '0' - 2;
+  for (char _char : phoneNumbers[index])
+  {
+    st.push({string("") + _char, 0});
+  }
+  while (st.size() > 0)
+  {
+    Node item = st.top();
+    int currentIndex = item.prevIndex + 1;
+    if (currentIndex == digits.length())
+    {
+      string _value = item.arr;
+      result.push_back(_value);
+      st.pop();
+    }
+    else
+    {
+      string _value = item.arr;
+      int index = digits[currentIndex] - '0' - 2;
+      st.pop();
+      for (char _char : phoneNumbers[index])
+      {
+        st.push({_value + _char, currentIndex});
+      }
+    }
+  }
+
+  return result;
+}
+
 int main()
 {
-  vector<int> abc{1, 2, 2};
-  bool result = countPartitions(abc);
-  cout << result << endl;
+  vector<string> result = letterCombinations("2");
+  cout << 1 << endl;
+  for (string value : result)
+  {
+    cout << value << endl;
+  }
 }
