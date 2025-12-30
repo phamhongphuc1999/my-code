@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -52,10 +53,57 @@ int threeSumClosest(vector<int> &nums, int target)
   return result;
 }
 
+// problem 45
+int jump(vector<int> &nums)
+{
+  int _size = nums.size();
+  int steps[_size];
+  memset(steps, 0, sizeof(steps));
+  for (int i = _size - 2; i >= 0; i--)
+  {
+    int possibleSteps = nums[i];
+    if (possibleSteps == 0)
+    {
+      steps[i] = _size;
+      continue;
+    }
+    int minSteps = _size * 2;
+    int offset = 1;
+    while (offset <= possibleSteps && i + offset < _size)
+    {
+      int step = steps[i + offset];
+      if (minSteps > step)
+        minSteps = step;
+      offset++;
+    }
+    steps[i] = minSteps + 1;
+  }
+  return steps[0];
+}
+
+int jump1(vector<int> &nums)
+{
+  int n = nums.size();
+  int jumps = 0;
+  int currentEnd = 0;
+  int farthest = 0;
+
+  for (int i = 0; i < n - 1; i++)
+  {
+    farthest = max(farthest, i + nums[i]);
+
+    if (i == currentEnd)
+    {
+      jumps++;
+      currentEnd = farthest;
+    }
+  }
+  return jumps;
+}
+
 int main()
 {
-  vector<int> vec1{0, 0, 0};
-  int result = threeSumClosest(vec1, 1);
+  vector<int> a = {2, 3, 0, 1, 4};
+  int result = jump(a);
   cout << result << endl;
-  return 0;
 }
