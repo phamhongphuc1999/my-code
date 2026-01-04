@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -67,6 +68,76 @@ int maxAreaOfIsland(vector<vector<int>> &grid)
   return result;
 }
 
+// problem 51
+class Solution51
+{
+public:
+  vector<vector<string>> solveNQueens(int n)
+  {
+    vector<string> results;
+    queue<string> qq;
+    for (int i = 0; i < n; i++)
+    {
+      qq.push(to_string(i));
+    }
+    while (qq.size() > 0)
+    {
+      string value = qq.front();
+      if (value.length() == n)
+      {
+        qq.pop();
+        results.push_back(value);
+      }
+      else
+      {
+        qq.pop();
+        int temp[n];
+        memset(temp, 0, sizeof(temp));
+        for (int i = 0; i < value.length(); i++)
+        {
+          int offset = value.length() - i;
+          int index = value[i] - '0';
+          temp[index] = 1;
+          if (index >= offset)
+            temp[index - offset] = 1;
+          if (index < n - offset)
+            temp[index + offset] = 1;
+        }
+        for (int i = 0; i < n; i++)
+        {
+          if (temp[i] == 0)
+            qq.push(value + to_string(i));
+        }
+      }
+    }
+    vector<vector<string>> realResult;
+    for (string lll : results)
+    {
+      vector<string> _rrrr;
+      for (int i = 0; i < n; i++)
+      {
+
+        int index = lll[i] - '0';
+        string prefix(index, '.');
+        string suffix(n - 1 - index, '.');
+        _rrrr.push_back(prefix + 'Q' + suffix);
+      }
+      realResult.push_back(_rrrr);
+    }
+    return realResult;
+  }
+};
+
 int main()
 {
+  Solution51 s = Solution51();
+  vector<vector<string>> results = s.solveNQueens(4);
+  for (vector<string> r1 : results)
+  {
+    for (string r : r1)
+    {
+      cout << r << endl;
+    }
+    cout << "------------------" << endl;
+  }
 }

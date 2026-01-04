@@ -2,6 +2,7 @@
 #include <vector>
 #include <bits/stdc++.h>
 #include <stack>
+#include <unordered_map>
 
 using namespace std;
 
@@ -324,9 +325,45 @@ int minAddToMakeValid(string s)
   return counter;
 }
 
+// problem 66
+vector<int> plusOne(vector<int> &digits)
+{
+  int remaining = 1;
+  vector<int> result;
+  for (int i = digits.size() - 1; i >= 0; i--)
+  {
+    int total = remaining + digits[i];
+    if (total >= 10)
+    {
+      remaining = 1;
+      total -= 10;
+    }
+    else
+      remaining = 0;
+    result.insert(result.begin(), total);
+  }
+  if (remaining == 1)
+    result.insert(result.begin(), 1);
+  return result;
+}
+
+// problem 961
+int repeatedNTimes(vector<int> &nums)
+{
+  unordered_map<int, int> um;
+  for (int i = 0; i < nums.size(); i++)
+  {
+    if (um[nums[i]] > 0)
+      return nums[i];
+    else
+      um[nums[i]] = 1;
+  }
+  return -1;
+}
+
 int main()
 {
-  int size = minAddToMakeValid("())");
-  cout << size << endl;
-  return 0;
+  vector<int> aa = {1, 2, 3, 3};
+  int aaa = repeatedNTimes(aa);
+  cout << aaa << endl;
 }

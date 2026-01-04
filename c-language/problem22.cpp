@@ -226,15 +226,4 @@ int main()
   Solution s = Solution();
   int result = s.latestDayToCross(2, 2, cells);
   cout << "latest day: " << result << endl;
-
-  // cout << "---------" << endl;
-  //   for (int i = 0; i < row; i++)
-  //   {
-  //     for (int j = 0; j < col; j++)
-  //     {
-  //       cout << lands[i][j] << ", ";
-  //     }
-  //     cout << endl;
-  //   }
-  //   cout << "---------" << endl;
 }
