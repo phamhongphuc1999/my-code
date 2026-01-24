@@ -1,11 +1,6 @@
 package main
 
 func main() {
-    board := [][]byte{
-        {'A', 'B', 'C', 'E'},
-        {'S', 'F', 'C', 'S'},
-        {'A', 'D', 'E', 'E'},
-    }
-    result := exist(board, "ABCB")
-    println(result)
+	result := minPairSum([]int{1, 2, 3, 100, 200, 1000, 10000, 20000, 300006})
+	println(result)
 }
