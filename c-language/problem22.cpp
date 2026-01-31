@@ -219,6 +219,27 @@ public:
   }
 };
 
+char nextGreatestLetter(vector<char> &letters, char target)
+{
+  int begin = 0;
+  int end = letters.size() - 1;
+  int result = 0;
+  while (begin <= end)
+  {
+    int middle = (begin + end) / 2;
+    if (letters[middle] <= target)
+    {
+      begin = middle + 1;
+    }
+    else
+    {
+      end = middle - 1;
+      result = middle;
+    }
+  }
+  return letters[result];
+}
+
 int main()
 {
   vector<vector<int>> cells = {

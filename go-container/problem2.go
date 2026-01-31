@@ -61,3 +61,55 @@ func minPairSum(nums []int) int {
 	}
 	return result
 }
+
+// problem 1984
+func minimumDifference(nums []int, k int) int {
+	sort.Ints(nums)
+	result := nums[k-1] - nums[0]
+	for i := 1; i <= len(nums)-k; i++ {
+		temp := nums[i+k-1] - nums[i]
+		if temp < result {
+			result = temp
+		}
+	}
+	return result
+}
+
+// problem 1200
+func minimumAbsDifference(arr []int) [][]int {
+	sort.Ints(arr)
+	minDistance := arr[1] - arr[0]
+	for i := 2; i < len(arr); i++ {
+		temp := arr[i] - arr[i-1]
+		if temp < minDistance {
+			minDistance = temp
+		}
+	}
+	result := [][]int{}
+	for i := 1; i < len(arr); i++ {
+		if arr[i]-arr[i-1] == minDistance {
+			result = append(result, []int{arr[i-1], arr[i]})
+		}
+	}
+	return result
+}
+
+// problem 96
+// If choose i as root,
+// => all smaller number must be in the left
+// => all bigger number must be in the right
+// => The number of tree can be constructed if choose i as root is
+// leftTree * rightTree, such as leftTree is the number of BST of i - 1 nodes and rightTree is the number of BST of n - i nodes.
+func numTrees(n int) int {
+	arr := make([]int, n+1)
+	arr[0] = 1
+	arr[1] = 1
+	for i := 2; i <= n; i++ {
+		total := 0
+		for j := 1; j <= i; j++ {
+			total += arr[j-1] * arr[i-j]
+		}
+		arr[i] = total
+	}
+	return arr[n]
+}

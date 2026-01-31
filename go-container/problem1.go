@@ -375,3 +375,18 @@ func maxSideLength(mat [][]int, threshold int) int {
 
 	return result
 }
+
+func nextGreatestLetter(letters []byte, target byte) byte {
+	begin, end := 0, len(letters)-1
+	result := 0
+	for begin <= end {
+		middle := (begin + end) / 2
+		if letters[middle] <= target {
+			begin = middle + 1
+		} else {
+			end = middle - 1
+			result = middle
+		}
+	}
+	return letters[result]
+}
