@@ -1,6 +1,6 @@
 package main
 
 func main() {
-	result := nextGreatestLetter([]byte{'c', 'f', 'j'}, 'a')
+	result := constructTransformedArray([]int{3, -2, 1, 1})
 	print(result)
 }

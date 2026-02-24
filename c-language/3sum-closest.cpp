@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <bits/stdc++.h>
+#include "header.h"
 
 using namespace std;
 
@@ -100,16 +101,6 @@ int jump1(vector<int> &nums)
   }
   return jumps;
 }
-
-struct TreeNode
-{
-  int val;
-  TreeNode *left;
-  TreeNode *right;
-  TreeNode() : val(0), left(nullptr), right(nullptr) {}
-  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-};
 
 class Solution1161
 {
@@ -262,6 +253,26 @@ public:
       }
     }
     return dp[pLen - 1] >= sLen;
+  }
+};
+
+class Solution1022
+{
+public:
+  int dfs(TreeNode *node, int current)
+  {
+    if (node == NULL)
+      return 0;
+    current = (current << 1) | node->val;
+    if (!node->left && !node->right)
+      return current;
+
+    return dfs(node->left, current) + dfs(node->right, current);
+  }
+
+  int sumRootToLeaf(TreeNode *root)
+  {
+    return dfs(root, 0);
   }
 };
 

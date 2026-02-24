@@ -390,3 +390,63 @@ func nextGreatestLetter(letters []byte, target byte) byte {
 	}
 	return letters[result]
 }
+
+func minimumCost(nums []int) int {
+	if len(nums) == 3 {
+		return nums[0] + nums[1] + nums[2]
+	}
+	a1, a2 := 100, 100
+	for i := 1; i < len(nums); i++ {
+		if a1 >= nums[i] {
+			a2 = a1
+			a1 = nums[i]
+		} else if a2 >= nums[i] {
+			a2 = nums[i]
+		}
+	}
+	return a1 + a2 + nums[0]
+}
+
+// problem 3637
+func isTrionic(nums []int) bool {
+	index := 1
+	for index < len(nums) && nums[index] > nums[index-1] {
+		index++
+	}
+	if index >= len(nums)-1 || index == 1 {
+		return false
+	}
+	newIndex := index
+	for newIndex < len(nums) && nums[newIndex] < nums[newIndex-1] {
+		newIndex++
+	}
+	if newIndex >= len(nums) || newIndex == index {
+		return false
+	}
+	for newIndex < len(nums) && nums[newIndex] > nums[newIndex-1] {
+		index++
+	}
+	return newIndex >= len(nums)
+}
+
+// problem 33379
+func constructTransformedArray(nums []int) []int {
+	_len := len(nums)
+	result := make([]int, _len)
+	for i := 0; i < _len; i++ {
+		if nums[i] == 0 {
+			result[i] = nums[i]
+		} else if nums[i] > 0 {
+			index := (i + nums[i]) % _len
+			result[i] = nums[index]
+		} else {
+			index := (-nums[i]) % _len
+			index = i - index
+			if index < 0 {
+				index = _len + index
+			}
+			result[i] = nums[index]
+		}
+	}
+	return result
+}

@@ -5,7 +5,6 @@
 #include <cmath>
 #include <unordered_map>
 #include <cstdint>
-#include <map>
 
 using namespace std;
 
@@ -229,18 +228,4 @@ int myAtoi(string s)
     count++;
   }
   return result * sign;
-}
-
-int main()
-{
-  vector<int> aaa{1, -2, -5, -4, -3, 3, 3, 5};
-  vector<vector<int>> result = fourSum(aaa, -11);
-  for (vector<int> item : result)
-  {
-    for (int i : item)
-    {
-      cout << i << ", ";
-    }
-    cout << endl;
-  }
 }
