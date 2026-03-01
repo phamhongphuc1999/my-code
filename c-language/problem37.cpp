@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <queue>
+#include "header.h"
 
 using namespace std;
 
@@ -81,36 +83,80 @@ void solveSudoku(vector<vector<char>> &board)
   }
 }
 
-int main()
+class Solution116
 {
-  vector<char> row1{'5', '3', '.', '.', '7', '.', '.', '.', '.'};
-  vector<char> row2{'6', '.', '.', '1', '9', '5', '.', '.', '.'};
-  vector<char> row3{'.', '9', '8', '.', '.', '.', '.', '6', '.'};
-  vector<char> row4{'8', '.', '.', '.', '6', '.', '.', '.', '3'};
-  vector<char> row5{'4', '.', '.', '8', '.', '3', '.', '.', '1'};
-  vector<char> row6{'7', '.', '.', '.', '2', '.', '.', '.', '6'};
-  vector<char> row7{'.', '6', '.', '.', '.', '.', '2', '8', '.'};
-  vector<char> row8{'.', '.', '.', '4', '1', '9', '.', '.', '5'};
-  vector<char> row9{'.', '.', '.', '.', '8', '.', '.', '7', '9'};
-  vector<vector<char>> board{row1, row2, row3, row4, row5, row6, row7, row8, row9};
-  for (int i = 0; i < 9; i++)
+public:
+  NextNode *connect(NextNode *root)
   {
-    for (int j = 0; j < 9; j++)
+    if (root == NULL)
+      return NULL;
+    queue<NextNode *> q;
+    q.push(root);
+    while (!q.empty())
     {
-      cout << board[i][j] << " ";
+      int size = q.size();
+      for (int i = 0; i < size - 1; i++)
+      {
+        NextNode *top = q.front();
+        q.pop();
+        top->next = q.front();
+        if (top->left != NULL)
+          q.push(top->left);
+        if (top->right != NULL)
+          q.push(top->right);
+      }
+      NextNode *top = q.front();
+      q.pop();
+      top->next = NULL;
+      if (top->left != NULL)
+        q.push(top->left);
+      if (top->right != NULL)
+        q.push(top->right);
     }
-    cout << endl;
+    return root;
   }
-  cout << endl
-       << endl;
-  solveSudoku(board);
-  for (int i = 0; i < 9; i++)
+};
+
+class Solution98
+{
+public:
+  bool lessThanDfs(TreeNode *root, int _max)
   {
-    for (int j = 0; j < 9; j++)
-    {
-      cout << board[i][j] << " ";
-    }
-    cout << endl;
+    if (root == NULL)
+      return true;
+    if (root->val >= _max)
+      return false;
+    bool leftCheck = lessThanDfs(root->left, root->val);
+    bool rightCheck = rangeDfs(root->right, root->val, _max);
+    return leftCheck && rightCheck;
   }
-  return 0;
-}
+
+  bool greaterThanDfs(TreeNode *root, int _min)
+  {
+    if (root == NULL)
+      return true;
+    if (root->val <= _min)
+      return false;
+    bool leftCheck = rangeDfs(root->left, _min, root->val);
+    bool rightCheck = greaterThanDfs(root->right, root->val);
+    return leftCheck && rightCheck;
+  }
+
+  bool rangeDfs(TreeNode *root, int _min, int _max)
+  {
+    if (root == NULL)
+      return true;
+    if (root->val <= _min || root->val >= _max)
+      return false;
+    bool leftCheck = rangeDfs(root->left, _min, root->val);
+    bool rightCheck = rangeDfs(root->right, root->val, _max);
+    return leftCheck && rightCheck;
+  }
+
+  bool isValidBST(TreeNode *root)
+  {
+    bool leftCheck = lessThanDfs(root->left, root->val);
+    bool rightCheck = greaterThanDfs(root->right, root->val);
+    return leftCheck && rightCheck;
+  }
+};

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <bit>
 #include <bits/stdc++.h>
 #include "header.h"
 
@@ -276,8 +277,187 @@ public:
   }
 };
 
-int main()
+class Solution94
 {
-  Solution10 s = Solution10();
-  cout << s.isMatch("mississippi", "mis*is*p*.") << endl;
+public:
+  vector<int> dfs(TreeNode *root)
+  {
+    vector<int> result;
+    if (root == NULL)
+      return result;
+    vector<int> left = dfs(root->left);
+    vector<int> right = dfs(root->right);
+    result.insert(result.end(), left.begin(), left.end());
+    result.push_back(root->val);
+    result.insert(result.end(), right.begin(), right.end());
+    return result;
+  }
+
+  vector<int> inorderTraversal(TreeNode *root)
+  {
+    // return dfs(root);
+    vector<int> result;
+    if (root == NULL)
+      return result;
+    stack<TreeNode *> s;
+    s.push(root);
+    while (!s.empty())
+    {
+      while (s.top()->left != NULL)
+      {
+        s.push(s.top()->left);
+      }
+      while (!s.empty())
+      {
+        if (s.top()->right != NULL)
+          break;
+        TreeNode *_sss = s.top();
+        s.pop();
+        result.push_back(_sss->val);
+      }
+      if (!s.empty())
+      {
+        TreeNode *_sss = s.top();
+        s.pop();
+        result.push_back(_sss->val);
+        s.push(_sss->right);
+      }
+    }
+    return result;
+  }
+};
+
+class Solution144
+{
+public:
+  vector<int> dfs(TreeNode *root)
+  {
+    vector<int> result;
+    if (root == NULL)
+      return result;
+    result.push_back(root->val);
+    vector<int> left = dfs(root->left);
+    vector<int> right = dfs(root->right);
+    result.insert(result.end(), left.begin(), left.end());
+    result.insert(result.end(), right.begin(), right.end());
+    return result;
+  }
+
+  vector<int> preorderTraversal(TreeNode *root)
+  {
+    // return dfs(root);
+    vector<int> result;
+    if (root == NULL)
+      return result;
+    stack<TreeNode *> s;
+    s.push(root);
+    while (!s.empty())
+    {
+      TreeNode *_top = s.top();
+      s.pop();
+      result.push_back(_top->val);
+      if (_top->right != NULL)
+        s.push(_top->right);
+      if (_top->left != NULL)
+        s.push(_top->left);
+    }
+    return result;
+  }
+};
+
+int countOnes(int n)
+{
+  int count = 0;
+  while (n)
+  {
+    n = n & (n - 1);
+    count++;
+  }
+  return count;
 }
+
+class Solution1356
+{
+public:
+  vector<int> sortByBits(vector<int> &arr)
+  {
+    sort(arr.begin(), arr.end(), [](int &a, int &b)
+         { 
+          int a1 = countOnes(a);
+          int b1 = countOnes(b);
+          if (a1 != b1) return a1 < b1;
+          else return a < b; });
+    return arr;
+  }
+};
+
+class Solution589
+{
+public:
+  void dfs(Node *node, vector<int> &res)
+  {
+    if (!node)
+      return;
+    res.push_back(node->val);
+    for (Node *c : node->children)
+      dfs(c, res);
+  }
+
+  vector<int> preorder(Node *root)
+  {
+    vector<int> res;
+    dfs(root, res);
+    return res;
+    // vector<int> result;
+    // if (!root)
+    //   return result;
+
+    // stack<Node *> st;
+    // st.push(root);
+
+    // while (!st.empty())
+    // {
+    //   Node *node = st.top();
+    //   st.pop();
+
+    //   result.push_back(node->val);
+
+    //   // push children in reverse order
+    //   for (auto it = node->children.rbegin(); it != node->children.rend(); ++it)
+    //   {
+    //     st.push(*it);
+    //   }
+    // }
+    // return result;
+  }
+};
+
+class Solution429
+{
+public:
+  vector<vector<int>> levelOrder(Node *root)
+  {
+    vector<vector<int>> result;
+    if (root == NULL)
+      return result;
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+      int size = q.size();
+      vector<int> temp;
+      for (int i = 0; i < size; i++)
+      {
+        Node *top = q.front();
+        q.pop();
+        temp.push_back(top->val);
+        for (Node *item : top->children)
+        {
+          q.push(item);
+        }
+      }
+      result.push_back(temp);
+    }
+    return result;
+  }
+};
