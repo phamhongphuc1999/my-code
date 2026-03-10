@@ -361,9 +361,63 @@ int repeatedNTimes(vector<int> &nums)
   return -1;
 }
 
-int main()
+class Solution36
 {
-  vector<int> aa = {1, 2, 3, 3};
-  int aaa = repeatedNTimes(aa);
-  cout << aaa << endl;
-}
+public:
+  bool isValidSudoku(vector<vector<char>> &board)
+  {
+    // row
+    for (int i = 0; i < 9; i++)
+    {
+      bool seen[10] = {false};
+      for (int j = 0; j < 9; j++)
+      {
+        if (board[i][j] != '.')
+        {
+          if (seen[board[i][j] - '0'])
+            return false;
+          seen[board[i][j] - '0'] = true;
+        }
+      }
+    }
+
+    // colume
+    for (int i = 0; i < 9; i++)
+    {
+      bool seen[10] = {false};
+      for (int j = 0; j < 9; j++)
+      {
+        if (board[j][i] != '.')
+        {
+          if (seen[board[j][i] - '0'])
+            return false;
+          seen[board[j][i] - '0'] = true;
+        }
+      }
+    }
+
+    // block
+    for (int i = 0; i < 9; i = i + 3)
+    {
+      for (int j = 0; j < 9; j = j + 3)
+      {
+        bool seen[10] = {false};
+        for (int i1 = 0; i1 <= 2; i1++)
+        {
+          for (int j1 = 0; j1 <= 2; j1++)
+          {
+            if (board[i + i1][j + j1] != '.')
+            {
+              int value = board[i + i1][j + j1] - '0';
+              if (seen[value])
+                return false;
+              seen[value] = true;
+            }
+          }
+        }
+      }
+    }
+
+    return true;
+  }
+};

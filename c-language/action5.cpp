@@ -1,6 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <stack>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+#include <cstring>
 #include "header.h"
 
 using namespace std;
