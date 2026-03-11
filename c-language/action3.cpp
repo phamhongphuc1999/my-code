@@ -104,7 +104,7 @@ int countPartitions(vector<int> &nums)
 
 string phoneNumbers[8] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
-struct Node
+struct CombinationNode
 {
   string arr;
   int prevIndex;
@@ -114,7 +114,7 @@ struct Node
 vector<string> letterCombinations(string digits)
 {
   vector<string> result;
-  stack<Node> st;
+  stack<CombinationNode> st;
   int index = digits[0] - '0' - 2;
   for (char _char : phoneNumbers[index])
   {
@@ -122,7 +122,7 @@ vector<string> letterCombinations(string digits)
   }
   while (st.size() > 0)
   {
-    Node item = st.top();
+    CombinationNode item = st.top();
     int currentIndex = item.prevIndex + 1;
     if (currentIndex == digits.length())
     {
@@ -143,16 +143,6 @@ vector<string> letterCombinations(string digits)
   }
 
   return result;
-}
-
-int main()
-{
-  vector<string> result = letterCombinations("2");
-  cout << 1 << endl;
-  for (string value : result)
-  {
-    cout << value << endl;
-  }
 }
 
 /*https://leetcode.com/problems/the-number-of-the-smallest-unoccupied-chair/description/*/
@@ -539,3 +529,5 @@ public:
     }
   }
 };
+
+int main() {}

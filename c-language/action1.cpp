@@ -649,3 +649,4 @@ void sToString(CustomStack *stack)
   cout << endl;
 }
 
+int main() {}

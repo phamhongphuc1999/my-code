@@ -1,3 +1,10 @@
+#ifndef HEADER_H
+#define HEADER_H
+
+#include <vector>
+
+using namespace std;
+
 struct TreeNode
 {
   int val;
@@ -12,7 +19,7 @@ class Node
 {
 public:
   int val;
-  vector<Node *> children;
+  std::vector<Node *> children;
 
   Node() {}
 
@@ -21,7 +28,7 @@ public:
     val = _val;
   }
 
-  Node(int _val, vector<Node *> _children)
+  Node(int _val, std::vector<Node *> _children)
   {
     val = _val;
     children = _children;
@@ -59,3 +66,5 @@ void subtract(int &mask, int x)
 {
   mask &= ~(1 << x);
 }
+
+#endif

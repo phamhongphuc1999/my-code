@@ -197,16 +197,6 @@ public:
   }
 };
 
-int main()
-{
-  Solution89 s = Solution89();
-  vector<int> result = s.grayCode(2);
-  for (int item : result)
-  {
-    cout << item << endl;
-  }
-}
-
 void generate(vector<string> &result, string temp, char item, int openCounter, int closeCounter, int index, int len)
 {
   if (temp.length() < len * 2)
@@ -536,3 +526,30 @@ bool areSentencesSimilar(string sentence1, string sentence2)
   }
   return start >= end1 + 1;
 }
+
+class Solution414
+{
+public:
+  int thirdMax(vector<int> &nums)
+  {
+    sort(nums.begin(), nums.end());
+    if (nums.size() >= 3)
+    {
+      int counter = 0;
+      for (int i = nums.size() - 2; i >= 0; i--)
+      {
+        if (nums[i + 1] > nums[i])
+          counter++;
+        if (counter == 2)
+          return nums[i];
+      }
+      if (counter == 2)
+        return nums[0];
+      return nums[nums.size() - 1];
+    }
+    else
+      return nums[nums.size() - 1];
+  }
+};
+
+int main() {}

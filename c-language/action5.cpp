@@ -3,14 +3,15 @@
 #include <queue>
 #include <stack>
 #include <algorithm>
-#include <vector>
 #include <cmath>
+#include <unordered_map>
 #include <cstring>
 #include "header.h"
+#include "trie.h"
 
 using namespace std;
 
-bool is_possible(std::vector<std::vector<int>> &board, int row, int col, int val)
+bool is_possible(vector<vector<int>> &board, int row, int col, int val)
 {
   for (int i = 0; i < 9; i++)
   {
@@ -36,7 +37,7 @@ bool is_possible(std::vector<std::vector<int>> &board, int row, int col, int val
   return true;
 }
 
-bool solve(std::vector<std::vector<int>> &board, int row, int col)
+bool solve(vector<vector<int>> &board, int row, int col)
 {
 
   if (col == 9)
@@ -182,7 +183,7 @@ void rotate(vector<vector<int>> &matrix)
   }
 }
 
-struct Node
+struct Sum2Node
 {
   vector<int> arr;
   int latestIndex;
@@ -194,7 +195,7 @@ vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
 {
   sort(candidates.begin(), candidates.end());
   vector<vector<int>> result;
-  stack<Node> st;
+  stack<Sum2Node> st;
   int preValue = -1;
   for (int i = 0; i < candidates.size(); i++)
   {
@@ -204,7 +205,7 @@ vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
   }
   while (st.size() > 0)
   {
-    Node cur = st.top();
+    Sum2Node cur = st.top();
     st.pop();
     if (cur.total == target)
     {
@@ -510,3 +511,72 @@ public:
     return realResult;
   }
 };
+
+class Solution212
+{
+public:
+  void dfs(vector<vector<char>> &board, int x, int y, TrieNode *node, vector<string> &result)
+  {
+    char c = board[x][y];
+
+    if (c == '#' || node->children[c - 'a'] == NULL)
+      return;
+
+    node = node->children[c - 'a'];
+
+    if (node->word != "")
+    {
+      result.push_back(node->word);
+      node->word = "";
+    }
+
+    board[x][y] = '#';
+
+    int dirs[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+    for (auto &d : dirs)
+    {
+      int nx = x + d[0];
+      int ny = y + d[1];
+
+      if (nx >= 0 && ny >= 0 && nx < board.size() && ny < board[0].size())
+        dfs(board, nx, ny, node, result);
+    }
+
+    board[x][y] = c;
+  }
+
+  vector<string> findWords(vector<vector<char>> &board, vector<string> &words)
+  {
+    Trie trie;
+
+    for (auto &w : words)
+      trie.insert(w);
+
+    vector<string> result;
+
+    for (int i = 0; i < board.size(); i++)
+      for (int j = 0; j < board[0].size(); j++)
+        dfs(board, i, j, trie.root, result);
+
+    return result;
+  }
+};
+
+int main()
+{
+  Solution212 s = Solution212();
+  vector<char> v1 = {'o', 'a', 'a', 'n'};
+  vector<char> v2 = {'e', 't', 'a', 'e'};
+  vector<char> v3 = {'i', 'h', 'k', 'r'};
+  vector<char> v4 = {'i', 'f', 'l', 'v'};
+  vector<vector<char>> board = {v1, v2, v3, v4};
+
+  vector<string> words = {"oath", "pea", "eat", "rain"};
+
+  vector<string> result = s.findWords(board, words);
+  for (string s : result)
+  {
+    cout << s << endl;
+  }
+}
