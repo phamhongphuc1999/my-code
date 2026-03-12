@@ -1,6 +1,5 @@
-program.exe
-problem*
-!problem*.cpp
-
-easy-problem*
-!easy-problem*.cpp
+*
+!*.cpp
+!.vscode
+!.devcontainer
+!*.h

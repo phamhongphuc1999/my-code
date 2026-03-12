@@ -2,6 +2,7 @@
 #include <vector>
 #include <bits/stdc++.h>
 #include <stack>
+#include <unordered_map>
 
 using namespace std;
 
@@ -324,9 +325,258 @@ int minAddToMakeValid(string s)
   return counter;
 }
 
-int main()
+// problem 66
+vector<int> plusOne(vector<int> &digits)
 {
-  int size = minAddToMakeValid("())");
-  cout << size << endl;
-  return 0;
+  int remaining = 1;
+  vector<int> result;
+  for (int i = digits.size() - 1; i >= 0; i--)
+  {
+    int total = remaining + digits[i];
+    if (total >= 10)
+    {
+      remaining = 1;
+      total -= 10;
+    }
+    else
+      remaining = 0;
+    result.insert(result.begin(), total);
+  }
+  if (remaining == 1)
+    result.insert(result.begin(), 1);
+  return result;
 }
+
+// problem 961
+int repeatedNTimes(vector<int> &nums)
+{
+  unordered_map<int, int> um;
+  for (int i = 0; i < nums.size(); i++)
+  {
+    if (um[nums[i]] > 0)
+      return nums[i];
+    else
+      um[nums[i]] = 1;
+  }
+  return -1;
+}
+
+class Solution36
+{
+public:
+  bool isValidSudoku(vector<vector<char>> &board)
+  {
+    // row
+    for (int i = 0; i < 9; i++)
+    {
+      bool seen[10] = {false};
+      for (int j = 0; j < 9; j++)
+      {
+        if (board[i][j] != '.')
+        {
+          if (seen[board[i][j] - '0'])
+            return false;
+          seen[board[i][j] - '0'] = true;
+        }
+      }
+    }
+
+    // colume
+    for (int i = 0; i < 9; i++)
+    {
+      bool seen[10] = {false};
+      for (int j = 0; j < 9; j++)
+      {
+        if (board[j][i] != '.')
+        {
+          if (seen[board[j][i] - '0'])
+            return false;
+          seen[board[j][i] - '0'] = true;
+        }
+      }
+    }
+
+    // block
+    for (int i = 0; i < 9; i = i + 3)
+    {
+      for (int j = 0; j < 9; j = j + 3)
+      {
+        bool seen[10] = {false};
+        for (int i1 = 0; i1 <= 2; i1++)
+        {
+          for (int j1 = 0; j1 <= 2; j1++)
+          {
+            if (board[i + i1][j + j1] != '.')
+            {
+              int value = board[i + i1][j + j1] - '0';
+              if (seen[value])
+                return false;
+              seen[value] = true;
+            }
+          }
+        }
+      }
+    }
+
+    return true;
+  }
+};
+
+class Solution2133
+{
+public:
+  bool checkValid(vector<vector<int>> &matrix)
+  {
+    int n = matrix.size();
+    for (int i = 0; i < n; i++)
+    {
+      vector<bool> rows(n + 1, false);
+      vector<bool> columns(n + 1, false);
+      for (int j = 0; j < n; j++)
+      {
+        int row = matrix[i][j];
+        int column = matrix[j][i];
+        if (rows[row])
+          return false;
+        else
+          rows[row] = true;
+        if (columns[column])
+          return false;
+        else
+          columns[column] = true;
+      }
+    }
+    return true;
+  }
+};
+
+class Solution37
+{
+public:
+  pair<int, int> nextIndex(int row, int column)
+  {
+    if (column == 8)
+      return {row + 1, 0};
+    else
+      return {row, column + 1};
+  }
+
+  bool dfs(vector<vector<char>> &board, int row, int column)
+  {
+    if (row == 9)
+      return true;
+
+    auto next = nextIndex(row, column);
+
+    if (board[row][column] != '.')
+      return dfs(board, next.first, next.second);
+
+    bool seen[10] = {false};
+
+    for (int i = 0; i < 9; i++)
+    {
+      if (board[row][i] != '.')
+        seen[board[row][i] - '0'] = true;
+
+      if (board[i][column] != '.')
+        seen[board[i][column] - '0'] = true;
+    }
+
+    int r = (row / 3) * 3;
+    int c = (column / 3) * 3;
+
+    for (int i = r; i < r + 3; i++)
+      for (int j = c; j < c + 3; j++)
+        if (board[i][j] != '.')
+          seen[board[i][j] - '0'] = true;
+
+    for (int i = 1; i <= 9; i++)
+    {
+      if (!seen[i])
+      {
+        board[row][column] = '0' + i;
+
+        if (dfs(board, next.first, next.second))
+          return true;
+
+        board[row][column] = '.';
+      }
+    }
+
+    return false;
+  }
+
+  void solveSudoku(vector<vector<char>> &board)
+  {
+    dfs(board, 0, 0);
+  }
+};
+
+class Solution1009
+{
+public:
+  int bitwiseComplement(int n)
+  {
+    int mask = 1;
+    while (mask < n)
+      mask = (mask << 1) | 1; // build 0111...1
+    return n ^ mask;
+  }
+};
+
+class Solution980
+{
+  int directions[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+
+public:
+  bool dfs(vector<vector<int>> &grid, pair<int, int> position, int steps, int total, int &result)
+  {
+    if (grid[position.first][position.second] == 2)
+      return steps == total;
+    int rows = grid.size();
+    int cols = grid[0].size();
+    for (auto direction : directions)
+    {
+      int _first = position.first + direction[0];
+      int _second = position.second + direction[1];
+      if (_first < 0 || _first >= rows || _second < 0 || _second >= cols)
+        continue;
+      if (grid[_first][_second] == 0 || grid[_first][_second] == 2)
+      {
+        if (grid[_first][_second] != 2)
+          grid[_first][_second] = -1;
+        bool check = dfs(grid, {_first, _second}, steps + 1, total, result);
+        if (check)
+          result++;
+        if (grid[_first][_second] != 2)
+          grid[_first][_second] = 0;
+      }
+    }
+    return false;
+  }
+
+  int uniquePathsIII(vector<vector<int>> &grid)
+  {
+    int rows = grid.size();
+    int cols = grid[0].size();
+    int total = 0;
+    pair<int, int> begin;
+    for (int i = 0; i < rows; i++)
+    {
+      for (int j = 0; j < cols; j++)
+      {
+        if (grid[i][j] != -1)
+        {
+          total++;
+          if (grid[i][j] == 1)
+          {
+            begin = {i, j};
+          }
+        }
+      }
+    }
+    int result = 0;
+    dfs(grid, begin, 1, total, result);
+    return result;
+  }
+};
