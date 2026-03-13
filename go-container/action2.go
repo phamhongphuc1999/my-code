@@ -4,14 +4,12 @@ import (
 	"sort"
 )
 
-var problem2Dirs [4][2]int = [4][2]int{{1, 0}, {0, 1}, {-1, 0}, {0, -1}}
-
 // problem 79
 func _exist(board [][]byte, word string, locationRow int, locationColumn int, index int, check [][]int) bool {
 	if index == len(word)-1 {
 		return true
 	}
-	for _, dir := range problem2Dirs {
+	for _, dir := range DIRECTIONS {
 		row := locationRow + dir[0]
 		column := locationColumn + dir[1]
 		if row >= 0 && row < len(board) && column >= 0 && column < len(board[0]) && check[row][column] == 0 && word[index+1] == board[row][column] {
@@ -112,4 +110,172 @@ func numTrees(n int) int {
 		arr[i] = total
 	}
 	return arr[n]
+}
+
+// problem 419
+func countBattleships(board [][]byte) int {
+	counter := 0
+	rows := len(board)
+	cols := len(board[0])
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if board[i][j] == 'X' {
+				board[i][j] = '.'
+				counter++
+				dx := 0
+				dy := 0
+				for _, dir := range DIRECTIONS {
+					nx := i + dir[0]
+					ny := j + dir[1]
+
+					if nx >= 0 && nx < rows && ny >= 0 && ny < cols {
+						if board[nx][ny] == 'X' {
+							dx = dir[0]
+							dy = dir[1]
+							break
+						}
+					}
+				}
+				if dx != 0 || dy != 0 {
+					nx := i + dx
+					ny := j + dy
+					for nx >= 0 && nx < rows && ny >= 0 && ny < cols {
+						if board[nx][ny] == 'X' {
+							board[nx][ny] = '.'
+							nx = nx + dx
+							ny = ny + dy
+						} else {
+							break
+						}
+					}
+				}
+			}
+		}
+	}
+	return counter
+}
+
+func countSubIslands_dfs(grid1 [][]int, grid2 [][]int, x int, y int) int {
+	result := 1
+	if grid1[x][y] == 0 {
+		result = 0
+	}
+	q := Queue[[2]int]{}
+	grid2[x][y] = 0
+	q.Push([2]int{x, y})
+	rows := len(grid2)
+	cols := len(grid2[0])
+	for !q.Empty() {
+		position := q.Pop()
+		for _, direction := range DIRECTIONS {
+			nx := position[0] + direction[0]
+			ny := position[1] + direction[1]
+			if nx >= 0 && nx < rows && ny >= 0 && ny < cols {
+				if grid2[nx][ny] == 1 {
+					if grid1[nx][ny] == 0 {
+						result = 0
+					}
+					grid2[nx][ny] = 0
+					q.Push([2]int{nx, ny})
+				}
+			}
+		}
+	}
+	return result
+}
+
+func countSubIslands(grid1 [][]int, grid2 [][]int) int {
+	rows := len(grid2)
+	cols := len(grid2[0])
+	result := 0
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if grid2[i][j] == 1 {
+				result += countSubIslands_dfs(grid1, grid2, i, j)
+			}
+		}
+	}
+	return result
+}
+
+func findMaxFish_dfs(grid [][]int, x int, y int) int {
+	q := Queue[[2]int]{}
+	q.Push([2]int{x, y})
+	result := grid[x][y]
+	grid[x][y] = 0
+	rows := len(grid)
+	cols := len(grid[0])
+	for !q.Empty() {
+		position := q.Pop()
+		for _, direction := range DIRECTIONS {
+			nx := position[0] + direction[0]
+			ny := position[1] + direction[1]
+			if nx >= 0 && nx < rows && ny >= 0 && ny < cols {
+				if grid[nx][ny] > 0 {
+					result += grid[nx][ny]
+					grid[nx][ny] = 0
+					q.Push([2]int{nx, ny})
+				}
+			}
+		}
+	}
+	return result
+}
+
+func findMaxFish(grid [][]int) int {
+	rows := len(grid)
+	cols := len(grid[0])
+	result := 0
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if grid[i][j] > 0 {
+				temp := findMaxFish_dfs(grid, i, j)
+				if result < temp {
+					result = temp
+				}
+			}
+		}
+	}
+	return result
+}
+
+func countIslands_dfs(grid [][]int, x int, y int) int {
+	q := Queue[[2]int]{}
+	q.Push([2]int{x, y})
+	result := grid[x][y]
+	grid[x][y] = 0
+	rows := len(grid)
+	cols := len(grid[0])
+	for !q.Empty() {
+		position := q.Pop()
+		for _, direction := range DIRECTIONS {
+			nx := position[0] + direction[0]
+			ny := position[1] + direction[1]
+			if nx >= 0 && nx < rows && ny >= 0 && ny < cols {
+				if grid[nx][ny] > 0 {
+					result += grid[nx][ny]
+					grid[nx][ny] = 0
+					q.Push([2]int{nx, ny})
+				}
+			}
+		}
+	}
+	return result
+}
+
+func countIslands(grid [][]int, k int) int {
+	rows := len(grid)
+	cols := len(grid[0])
+	result := 0
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if grid[i][j] > 0 {
+				temp := countIslands_dfs(grid, i, j)
+				if temp%k == 0 {
+					result++
+				}
+			}
+		}
+	}
+	return result
 }

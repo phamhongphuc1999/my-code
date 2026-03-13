@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 #include <stack>
 #include <unordered_map>
+#include "header.h"
 
 using namespace std;
 
@@ -526,8 +527,6 @@ public:
 
 class Solution980
 {
-  int directions[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
-
 public:
   bool dfs(vector<vector<int>> &grid, pair<int, int> position, int steps, int total, int &result)
   {
@@ -535,7 +534,7 @@ public:
       return steps == total;
     int rows = grid.size();
     int cols = grid[0].size();
-    for (auto direction : directions)
+    for (auto direction : DIRECTIONS)
     {
       int _first = position.first + direction[0];
       int _second = position.second + direction[1];

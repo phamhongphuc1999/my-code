@@ -405,7 +405,6 @@ int maxCount(vector<int> &banned, int n, int maxSum)
   return counter;
 }
 
-// problem 47
 class Solution47
 {
 public:
@@ -478,7 +477,6 @@ public:
   }
 };
 
-// problem 77
 class Solution77
 {
 public:
@@ -525,6 +523,67 @@ public:
           temp.pop_back();
           counters[i - 1]++;
         }
+      }
+    }
+  }
+};
+
+class Solution130
+{
+public:
+  void dfs(vector<vector<char>> &board, int x, int y)
+  {
+    queue<pair<int, int>> q;
+    q.push({x, y});
+    board[x][y] = 's';
+    int rows = board.size();
+    int cols = board[0].size();
+    while (!q.empty())
+    {
+      pair<int, int> position = q.front();
+      q.pop();
+      for (auto direction : DIRECTIONS)
+      {
+        int nx = position.first + direction[0];
+        int ny = position.second + direction[1];
+        if (nx >= 0 && nx < rows && ny >= 0 && ny < cols)
+        {
+          if (board[nx][ny] == 'O')
+          {
+            board[nx][ny] = 's';
+            q.push({nx, ny});
+          }
+        }
+      }
+    }
+  }
+
+  void solve(vector<vector<char>> &board)
+  {
+    int rows = board.size();
+    int cols = board[0].size();
+    for (int i = 0; i < cols; i++)
+    {
+      if (board[0][i] == 'O')
+        dfs(board, 0, i);
+      if (board[rows - 1][i] == 'O')
+        dfs(board, rows - 1, i);
+    }
+    for (int i = 1; i < rows - 1; i++)
+    {
+      if (board[i][0] == 'O')
+        dfs(board, i, 0);
+      if (board[i][cols - 1] == 'O')
+        dfs(board, i, cols - 1);
+    }
+    for (int i = 0; i < rows; i++)
+    {
+      for (int j = 0; j < cols; j++)
+      {
+        if (board[i][j] == 'O')
+          board[i][j] = 'X';
+        else if (board[i][j] == 's')
+          board[i][j] = 'O';
       }
     }
   }

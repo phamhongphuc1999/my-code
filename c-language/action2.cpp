@@ -6,6 +6,7 @@
 #include <queue>
 #include <iostream>
 #include <sstream>
+#include "header.h"
 
 using namespace std;
 
@@ -549,6 +550,57 @@ public:
     }
     else
       return nums[nums.size() - 1];
+  }
+};
+
+class Solution200
+{
+public:
+  void floodAIland(vector<vector<char>> &grid, int x, int y)
+  {
+    queue<pair<int, int>> q;
+    q.push({x, y});
+    int rows = grid.size();
+    int cols = grid[0].size();
+    while (!q.empty())
+    {
+      pair<int, int> position = q.front();
+      q.pop();
+      grid[position.first][position.second] = '0';
+      for (auto direction : DIRECTIONS)
+      {
+        int nx = position.first + direction[0];
+        int ny = position.second + direction[1];
+
+        if (nx >= 0 && nx < rows && ny >= 0 && ny < cols)
+        {
+          if (grid[nx][ny] == '1')
+          {
+            q.push({nx, ny});
+            grid[nx][ny] = '0';
+          }
+        }
+      }
+    }
+  }
+
+  int numIslands(vector<vector<char>> &grid)
+  {
+    int counter = 0;
+    int rows = grid.size();
+    int cols = grid[0].size();
+    for (int i = 0; i < rows; i++)
+    {
+      for (int j = 0; j < cols; j++)
+      {
+        if (grid[i][j] == '1')
+        {
+          counter++;
+          floodAIland(grid, i, j);
+        }
+      }
+    }
+    return counter;
   }
 };
 
