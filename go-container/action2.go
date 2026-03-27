@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math"
 	"sort"
 )
 
@@ -263,6 +264,7 @@ func countIslands_dfs(grid [][]int, x int, y int) int {
 	return result
 }
 
+// problem 1905
 func countIslands(grid [][]int, k int) int {
 	rows := len(grid)
 	cols := len(grid[0])
@@ -279,3 +281,107 @@ func countIslands(grid [][]int, k int) int {
 	}
 	return result
 }
+
+// problem 3070
+func countSubmatrices(grid [][]int, k int) int {
+	rows := len(grid)
+	cols := len(grid[0])
+	counter := 0
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if j > 0 {
+				grid[i][j] = grid[i][j] + grid[i][j-1]
+			}
+			if i > 0 {
+				grid[i][j] = grid[i][j] + grid[i-1][j]
+			}
+			if i > 0 && j > 0 {
+				grid[i][j] = grid[i][j] - grid[i-1][j-1]
+			}
+			if grid[i][j] <= k {
+				counter++
+			} else {
+				if j == 0 {
+					return counter
+				} else {
+					break
+				}
+			}
+		}
+	}
+	return counter
+}
+
+func totalNQueens(n int) int {
+	cols := make([]bool, n)
+	diag1 := make([]bool, 2*n)
+	diag2 := make([]bool, 2*n)
+
+	var dfs func(int) int
+
+	dfs = func(row int) int {
+		if row == n {
+			return 1
+		}
+
+		count := 0
+
+		for col := 0; col < n; col++ {
+
+			if cols[col] || diag1[row+col] || diag2[row-col+n] {
+				continue
+			}
+
+			cols[col] = true
+			diag1[row+col] = true
+			diag2[row-col+n] = true
+
+			count += dfs(row + 1)
+
+			cols[col] = false
+			diag1[row+col] = false
+			diag2[row-col+n] = false
+		}
+
+		return count
+	}
+	return dfs(0)
+}
+
+func isBalanced_dfs(node *TreeNode) float64 {
+	if node == nil {
+		return 0
+	}
+	left := isBalanced_dfs(node.Left)
+	if left == -1 {
+		return -1
+	}
+	right := isBalanced_dfs(node.Right)
+	if right == -1 {
+		return -1
+	}
+	if math.Abs(left-right) > 1 {
+		return -1
+	}
+	return 1 + math.Max(left, right)
+}
+
+// problem 110
+func isBalanced(root *TreeNode) bool {
+	return isBalanced_dfs(root) != -1
+}
+
+// problem 104
+func maxDepth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	left := maxDepth(root.Left)
+	right := maxDepth(root.Right)
+	return max(left, right) + 1
+}
+
+// // problem 1376
+// func numOfMinutes(n int, headID int, manager []int, informTime []int) int {
+// 	root := TreeNode{}
+// }

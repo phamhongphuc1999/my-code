@@ -1,5 +1,7 @@
 package main
 
+import "sort"
+
 // problem 3453
 func separateSquares(squares [][]int) float64 {
 	precision := 0.00001
@@ -449,4 +451,46 @@ func constructTransformedArray(nums []int) []int {
 		}
 	}
 	return result
+}
+
+// problem 78
+func subsets(nums []int) [][]int {
+	_len := len(nums)
+	result := [][]int{}
+	for i := 0; i < 1<<_len; i++ {
+		temp := []int{}
+		for j := 0; j < _len; j++ {
+			if checkKIndexBit(i, j) == 1 {
+				temp = append(temp, nums[j])
+			}
+		}
+		result = append(result, temp)
+	}
+	return result
+}
+
+// problem 90
+func subsetsWithDup(nums []int) [][]int {
+	sort.Ints(nums)
+
+	var res [][]int
+	backtrack(nums, 0, []int{}, &res)
+
+	return res
+}
+
+func backtrack(nums []int, start int, subset []int, res *[][]int) {
+	temp := make([]int, len(subset))
+	copy(temp, subset)
+	*res = append(*res, temp)
+
+	for i := start; i < len(nums); i++ {
+		if i > start && nums[i] == nums[i-1] {
+			continue
+		}
+
+		subset = append(subset, nums[i])
+		backtrack(nums, i+1, subset, res)
+		subset = subset[:len(subset)-1]
+	}
 }
