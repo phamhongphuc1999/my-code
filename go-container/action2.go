@@ -381,7 +381,73 @@ func maxDepth(root *TreeNode) int {
 	return max(left, right) + 1
 }
 
-// // problem 1376
-// func numOfMinutes(n int, headID int, manager []int, informTime []int) int {
-// 	root := TreeNode{}
-// }
+// problem 54
+func spiralOrder(matrix [][]int) []int {
+	directions := [4][2]int{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
+	rows := len(matrix)
+	cols := len(matrix[0])
+	from := [2]int{0, 0}
+	to := [2]int{rows - 1, cols - 1}
+	dir := 0
+	pos := [2]int{0, 0}
+	result := make([]int, rows*cols)
+	counter := 0
+	for counter < rows*cols {
+		result[counter] = matrix[pos[0]][pos[1]]
+		counter++
+		if dir == 0 && pos[1]+1 > to[1] {
+			dir = 1
+			from[0]++
+		} else if dir == 1 && pos[0]+1 > to[0] {
+			dir = 2
+			to[1]--
+		} else if dir == 2 && pos[1]-1 < from[1] {
+			dir = 3
+			to[0]--
+		} else if dir == 3 && pos[0]-1 < from[0] {
+			dir = 0
+			from[1]++
+		}
+		pos[0] = pos[0] + directions[dir][0]
+		pos[1] = pos[1] + directions[dir][1]
+	}
+	return result
+}
+
+// problem 191
+func hammingWeight(n int) int {
+	result := 0
+	temp := n
+	for temp > 0 {
+		if temp%2 == 1 {
+			result++
+		}
+		temp = temp / 2
+	}
+	return result
+}
+
+// problem 3
+func lengthOfLongestSubstring(s string) int {
+	if len(s) == 0 {
+		return 0
+	}
+	begin := 0
+	end := 0
+	m := make(map[byte]int)
+	result := 1
+	for c := range s {
+		value, ok := m[s[c]]
+		if ok {
+			if value+1 >= begin {
+				begin = value + 1
+			}
+		}
+		m[s[c]] = end
+		end++
+		if end-begin > result {
+			result = end - begin
+		}
+	}
+	return result
+}
