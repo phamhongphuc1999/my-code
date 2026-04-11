@@ -451,3 +451,37 @@ func lengthOfLongestSubstring(s string) int {
 	}
 	return result
 }
+
+// problem 3740
+func minimumDistance(nums []int) int {
+	result := -1
+	m := make(map[int][3]int)
+	for i := range nums {
+		value, ok := m[nums[i]]
+		if ok {
+			if value[1] == -1 {
+				m[nums[i]] = [3]int{value[0], i, -1}
+			} else if value[2] == -1 {
+				m[nums[i]] = [3]int{value[0], value[1], i}
+				distance := i - value[0]
+				if result == -1 {
+					result = distance
+				} else if distance < result {
+					result = distance
+				}
+			} else {
+				m[nums[i]] = [3]int{value[1], value[2], i}
+				distance := i - value[1]
+				if distance < result {
+					result = distance
+				}
+			}
+		} else {
+			m[nums[i]] = [3]int{i, -1, -1}
+		}
+	}
+	if result == -1 {
+		return -1
+	}
+	return result * 2
+}
