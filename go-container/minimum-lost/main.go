@@ -21,7 +21,6 @@ import (
 func minimumLoss(price []int64) int64 {
 	n := len(price)
 
-	// Build an index array, sorted by value in DESCENDING order
 	idx := make([]int, n)
 	for i := range idx {
 		idx[i] = i
@@ -31,14 +30,12 @@ func minimumLoss(price []int64) int64 {
 		return price[idx[a]] > price[idx[b]]
 	})
 
-	var minLoss int64 = -1 // -1 means no valid answer found yet
+	var minLoss int64 = -1
 
-	// Scan adjacent pairs in the price-sorted array
 	for k := 0; k < n-1; k++ {
-		buyIdx := idx[k]     // higher price (the "buy" candidate)
-		sellIdx := idx[k+1]  // lower price (the "sell" candidate)
+		buyIdx := idx[k]     
+		sellIdx := idx[k+1]  
 
-		// Valid only if the buy happens BEFORE the sell in time
 		if buyIdx < sellIdx {
 			loss := price[buyIdx] - price[sellIdx]
 			if minLoss == -1 || loss < minLoss {

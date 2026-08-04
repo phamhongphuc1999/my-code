@@ -25,7 +25,6 @@ func hanoi(posts []int32) int32 {
 		pow4 *= 4
 	}
 
-	// encode: each disk i (0..n-1) is one base-4 digit, rods[i] is 0..3
 	encode := func(rods []int8) int {
 		code := 0
 		for i := n - 1; i >= 0; i-- {
@@ -45,10 +44,10 @@ func hanoi(posts []int32) int32 {
 
 	startRods := make([]int8, n)
 	for i := 0; i < n; i++ {
-		startRods[i] = int8(posts[i] - 1) // convert rod 1..4 to 0..3
+		startRods[i] = int8(posts[i] - 1) 
 	}
 	startCode := encode(startRods)
-	goalCode := 0 // all disks on rod 0 (i.e. original rod 1)
+	goalCode := 0 
 
 	if startCode == goalCode {
 		return 0
@@ -68,7 +67,6 @@ func hanoi(posts []int32) int32 {
 		d := dist[code]
 		rods := decode(code)
 
-		// find the top disk of each rod: smallest index = smallest radius
 		top := [4]int{-1, -1, -1, -1}
 		for i := 0; i < n; i++ {
 			r := rods[i]
@@ -78,7 +76,7 @@ func hanoi(posts []int32) int32 {
 		}
 
 		for r := 0; r < 4; r++ {
-			di := top[r] // top disk of rod r
+			di := top[r] 
 			if di == -1 {
 				continue
 			}
@@ -86,7 +84,6 @@ func hanoi(posts []int32) int32 {
 				if r2 == r {
 					continue
 				}
-				// can move if rod r2 is empty, or its top disk is larger (bigger index)
 				if top[r2] == -1 || top[r2] > di {
 					newRods := make([]int8, n)
 					copy(newRods, rods)
@@ -105,7 +102,7 @@ func hanoi(posts []int32) int32 {
 		}
 	}
 
-	return -1 // never happens since there is always a path to the goal state
+	return -1 
 }
 
 func main() {

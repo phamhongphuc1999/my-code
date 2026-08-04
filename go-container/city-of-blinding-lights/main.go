@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const INF int32 = 1 << 30 // large enough; node ≤ 400, weight ≤ 350, so no overflow risk when summing
+const INF int32 = 1 << 30
 
 func main() {
 	reader := bufio.NewReaderSize(os.Stdin, 16*1024*1024)
@@ -27,7 +27,6 @@ func main() {
 
 	n := int(roadNodes)
 
-	// Distance matrix, vertices numbered 1..n
 	dist := make([][]int32, n+1)
 	for i := 0; i <= n; i++ {
 		dist[i] = make([]int32, n+1)
@@ -56,11 +55,9 @@ func main() {
 		v := int(edgeTo)
 		w := int32(edgeWeight)
 
-		// If there are duplicate u->v edges, the LAST one wins (overwrite, not min)
 		dist[u][v] = w
 	}
 
-	// Floyd-Warshall O(n^3)
 	for k := 1; k <= n; k++ {
 		dk := dist[k]
 		for i := 1; i <= n; i++ {
